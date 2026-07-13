@@ -1,0 +1,545 @@
+/* ——— Biometod AI bosh sahifa: dashboard uslubidagi landing ——— */
+
+.bh-page {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 24px clamp(16px, 2.5vw, 44px) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Umumiy oq karta yuzasi */
+.card-surface {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: 0 6px 24px rgba(15, 92, 52, 0.05);
+}
+
+/* ——— HERO ——— */
+.bh-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 330px;
+  gap: 24px;
+  align-items: center;
+  border-radius: 24px;
+  padding: 36px 32px;
+  min-height: 330px;
+  background-size: cover;
+  background-position: center right;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(11, 58, 35, 0.22);
+}
+
+.bh-hero-left {
+  color: #fff;
+  max-width: 560px;
+}
+
+.bh-hero-title {
+  font-size: clamp(44px, 6vw, 64px);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  margin: 0 0 10px;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.35);
+}
+
+.bh-hero-sub {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.55;
+  margin: 0 0 26px;
+  max-width: 420px;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
+}
+
+.bh-hero-feats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin-bottom: 28px;
+}
+
+.bh-hero-feat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 92px;
+  text-align: center;
+}
+
+.bh-hero-feat-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  font-size: 19px;
+  color: #fff;
+}
+
+.bh-hero-feat-label {
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.35;
+  white-space: pre-line;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.4);
+}
+
+.bh-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* Hero ichidagi o'ng panel */
+.bh-hero-panel {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.bh-panel-title {
+  display: block;
+  font-size: 14px;
+  font-weight: 750;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+
+.bh-panel-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.bh-panel-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 4px;
+}
+
+.bh-panel-stat + .bh-panel-stat {
+  border-left: 1px solid var(--line);
+}
+
+.bh-panel-num {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--accent-ink);
+}
+
+.bh-panel-label {
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.bh-next-topic {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+}
+
+.bh-next-img {
+  width: 54px;
+  height: 54px;
+  border-radius: 10px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.bh-next-img-ph {
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 20px;
+}
+
+.bh-next-title {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink);
+  line-height: 1.35;
+  margin-bottom: 4px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ——— QIDIRUV ——— */
+.bh-search .ant-input-affix-wrapper {
+  border-radius: 999px;
+  padding: 10px 18px;
+  box-shadow: 0 4px 18px rgba(15, 92, 52, 0.06);
+}
+
+/* ——— FUNKSIYA KARTOCHKALARI ——— */
+.bh-features {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+  gap: 12px;
+}
+
+.bh-feature {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 8px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bh-feature:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 10px 26px rgba(15, 92, 52, 0.12);
+}
+
+.bh-feature-icon {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  font-size: 21px;
+}
+
+.bh-feature-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ink);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.bh-feature-sub {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.3;
+  text-align: center;
+}
+
+/* ——— PASTKI QISM ——— */
+.bh-bottom {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  align-items: start;
+}
+
+.bh-topics {
+  padding: 20px;
+  min-width: 0;
+}
+
+.bh-topics-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.bh-h2 {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0;
+}
+
+.bh-h3 {
+  font-size: 14.5px;
+  font-weight: 750;
+  color: var(--ink);
+  margin: 0 0 14px;
+}
+
+/* Karusel */
+.bh-rail-wrap {
+  position: relative;
+}
+
+.bh-rail {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 6px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+}
+
+.bh-topic-card {
+  flex: 0 0 200px;
+  scroll-snap-align: start;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.bh-topic-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+  box-shadow: 0 12px 28px rgba(15, 92, 52, 0.12);
+}
+
+.bh-topic-media {
+  position: relative;
+  height: 118px;
+  background: var(--accent-soft);
+}
+
+.bh-topic-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bh-topic-ph {
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  font-size: 26px;
+}
+
+.bh-topic-num {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 800;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.bh-topic-body {
+  padding: 12px 12px 10px;
+}
+
+.bh-topic-title {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--ink);
+  line-height: 1.4;
+  min-height: 36px;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bh-topic-progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+
+.bh-rail-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(15, 92, 52, 0.14);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.bh-rail-btn:hover {
+  background: var(--accent);
+  color: #fff;
+}
+
+.bh-rail-prev { left: -14px; }
+.bh-rail-next { right: -14px; }
+
+.bh-empty {
+  padding: 30px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+/* ——— YON PANEL ——— */
+.bh-side {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bh-side-card {
+  padding: 18px;
+}
+
+.bh-donut-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bh-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+
+.bh-legend span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.bh-legend b {
+  margin-left: auto;
+  padding-left: 10px;
+}
+
+.bh-legend i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bh-leaders {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.bh-leader {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.bh-leader-rank {
+  width: 20px;
+  height: 20px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.bh-leader-avatar {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font-size: 13px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.bh-leader-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.bh-leader-points {
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.bh-side-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-ink);
+}
+
+/* ——— MOSLASHUVCHANLIK ——— */
+@media (max-width: 1000px) {
+  .bh-hero {
+    grid-template-columns: 1fr;
+    background-position: center;
+  }
+  .bh-hero-panel {
+    max-width: 480px;
+  }
+  .bh-bottom {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .bh-hero {
+    padding: 26px 20px;
+  }
+  .bh-hero-feats {
+    gap: 12px;
+  }
+  .bh-hero-feat {
+    width: 78px;
+  }
+  .bh-rail-prev { left: -8px; }
+  .bh-rail-next { right: -8px; }
+}

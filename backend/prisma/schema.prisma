@@ -1,0 +1,232 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum MaterialType {
+  IMAGE
+  VIDEO
+  TEXT
+  MODEL_3D
+  DOCUMENT
+  PRESENTATION
+  INFOGRAPHIC
+}
+
+enum InfographicLayout {
+  RADIAL
+  TIMELINE
+}
+
+// Interaktiv resurs turi — talaba sahifasida qaysi bo'limda chiqishini belgilaydi
+enum InteractiveKind {
+  MODEL_3D
+  SIMULATION
+  VIRTUAL_LAB
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  login         String         @unique
+  password      String
+  role          Role           @default(STUDENT)
+  points        Int            @default(0)
+  avatar        String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  quizResults   QuizResult[]
+  activities    UserActivity[]
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+// Fan — Category ustidagi eng yuqori daraja (masalan: Zoologiya, Botanika).
+// Yangi fanlar admin paneldan qo'shiladi.
+model Subject {
+  id          String     @id @default(uuid())
+  name        String
+  slug        String     @unique
+  description String?
+  imageUrl    String?
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  categories  Category[]
+
+  @@map("subjects")
+}
+
+model Category {
+  id          String    @id @default(uuid())
+  name        String
+  slug        String    @unique
+  description String?
+  imageUrl    String?
+  order       Int       @default(0)
+  createdAt   DateTime  @default(now())
+  subjectId   String?
+  subject     Subject?  @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  topics      Topic[]
+
+  @@map("categories")
+}
+
+model Topic {
+  id          String     @id @default(uuid())
+  categoryId  String
+  category    Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  coverImage  String?
+  has3DModel  Boolean    @default(false)
+  order       Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  materials    Material[]
+  quizzes      Quiz[]
+  gameLinks    GameLink[]
+  infographics Infographic[]
+  interactives Interactive[]
+
+  @@map("topics")
+}
+
+// Tashqi interaktiv resurs (Sketchfab 3D, PhET/JavaLab simulyatsiyasi va h.k.)
+// — sayt ichida iframe orqali ochiladi. Faqat ishonchli domenlarga ruxsat.
+model Interactive {
+  id          String          @id @default(uuid())
+  topicId     String
+  topic       Topic           @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  kind        InteractiveKind @default(MODEL_3D)
+  title       String
+  embedUrl    String
+  description String?
+  order       Int             @default(0)
+  createdAt   DateTime        @default(now())
+
+  @@map("interactives")
+}
+
+// Infografika — ustoz tayyor mental-karta rasmini yuklaydi (imageUrl).
+// centerLabel/layout/blocks — eski blokli formatdagi yozuvlar uchun
+// saqlab qolingan (yangi yozuvlar faqat rasm bilan ishlaydi).
+model Infographic {
+  id          String            @id @default(uuid())
+  topicId     String
+  topic       Topic             @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  title       String
+  imageUrl    String?
+  centerLabel String?
+  layout      InfographicLayout @default(RADIAL)
+  note        String?
+  order       Int               @default(0)
+  blocks      Json              @default("[]")
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@map("infographics")
+}
+
+model Material {
+  id        String       @id @default(uuid())
+  topicId   String
+  topic     Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  type      MaterialType
+  title     String
+  content   String?
+  url       String?
+  order     Int          @default(0)
+  createdAt DateTime     @default(now())
+
+  @@map("materials")
+}
+
+model Quiz {
+  id            String       @id @default(uuid())
+  topicId       String
+  topic         Topic        @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  fileUrl       String?
+  fileType      String?
+  questionCount Int          @default(0)
+  timeLimit     Int          @default(0)
+  answerKey     Json?
+  createdAt     DateTime     @default(now())
+  results       QuizResult[]
+
+  @@map("quizzes")
+}
+
+model QuizResult {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  quizId       String
+  quiz         Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  score        Float    @default(0)
+  correctCount Int      @default(0)
+  totalCount   Int      @default(0)
+  earnedPoints Int      @default(0)
+  createdAt    DateTime @default(now())
+
+  @@unique([userId, quizId])
+  @@map("quiz_results")
+}
+
+model GameLink {
+  id          String   @id @default(uuid())
+  topicId     String
+  topic       Topic    @relation(fields: [topicId], references: [id], onDelete: Cascade)
+  title       String
+  url         String
+  description String?
+  platform    String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  @@map("game_links")
+}
+
+// Render free tierda doimiy disk yo'q — fayllar (rasm, video, hujjat)
+// to'g'ridan-to'g'ri Postgres (Neon) ichida bytea sifatida saqlanadi
+model StoredFile {
+  id        String   @id @default(uuid())
+  filename  String
+  mimetype  String
+  size      Int
+  data      Bytes
+  createdAt DateTime @default(now())
+
+  @@map("files")
+}
+
+model UserActivity {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String
+  points    Int      @default(0)
+  meta      Json?
+  createdAt DateTime @default(now())
+
+  @@map("user_activities")
+}

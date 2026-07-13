@@ -1,0 +1,285 @@
+:root {
+  font-family: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Kreativ minimalizm + botanika: oq-yashil palitra */
+  --bg: #f5faf5;
+  --surface: #ffffff;
+  --ink: #14291b;
+  --muted: #5d7263;
+  --line: #dceade;
+  --accent: #1b8a4e;
+  --accent-ink: #0f5c34;
+  --accent-deep: #0b3a23;
+  --accent-soft: #e6f4ea;
+
+  /* Barg shaklidagi burchak — uchta yumaloq, bittasi o'tkir */
+  --leaf-radius: 22px 22px 22px 5px;
+
+  --header-bg: rgba(245, 250, 245, 0.9);
+}
+
+/* ——— Tungi rejim (dark mode) ——— */
+:root[data-theme='dark'] {
+  --bg: #0f1712;
+  --surface: #16211a;
+  --ink: #e8f1ea;
+  --muted: #9cb2a2;
+  --line: #26352b;
+  --accent: #2fb56b;
+  --accent-ink: #7fd6a4;
+  --accent-deep: #0b2418;
+  --accent-soft: #1c2f23;
+  --header-bg: rgba(15, 23, 18, 0.88);
+}
+
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(1100px 500px at 88% -8%, #142a1c 0%, transparent 60%),
+    radial-gradient(900px 500px at -12% 108%, #12241a 0%, transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 500px at 88% -8%, #e3f2e6 0%, transparent 60%),
+    radial-gradient(900px 500px at -12% 108%, #eaf5ec 0%, transparent 55%),
+    var(--bg);
+  background-attachment: fixed;
+}
+
+#root { min-height: 100vh; }
+
+::selection { background: var(--accent); color: #fff; }
+
+/* ——— Umumiy primitivlar ——— */
+
+.page {
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 2.5vw, 44px);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+
+.display {
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  color: var(--ink);
+}
+
+/* Sarlavhalardagi urg'u — botanik serif-kursiv */
+.display em, .home-title em {
+  font-family: 'Fraunces', Georgia, serif;
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+}
+
+.mono-index {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.06em;
+}
+
+/* Organik barg-shakl blob — dekor uchun */
+.leaf-blob {
+  position: absolute;
+  border-radius: 100% 0 100% 0;
+  background: linear-gradient(135deg, var(--accent-soft), rgba(230, 244, 234, 0));
+  pointer-events: none;
+}
+
+/* Minimal karta: barg burchakli, hoverda yashil jonlanadi */
+.min-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--leaf-radius);
+  overflow: hidden;
+  cursor: pointer;
+  transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.min-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(15, 92, 52, 0.09);
+}
+
+/* Rasm doim tabiiy rangda; hoverda yengil kattalashadi */
+.gray-img {
+  transition: transform 0.5s ease;
+}
+.min-card:hover .gray-img {
+  transform: scale(1.03);
+}
+
+/* Hoverda o'ngga siljiydigan strelka */
+.arrow-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-ink);
+}
+.arrow-cue .arrow {
+  transition: transform 0.25s ease;
+}
+.min-card:hover .arrow-cue .arrow,
+.min-card:hover .arrow,
+.arrow-cue:hover .arrow {
+  transform: translateX(4px);
+}
+.min-card .arrow {
+  transition: transform 0.25s ease;
+}
+
+/* Paydo bo'lish animatsiyasi */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  opacity: 0;
+}
+
+/* Barglarning yengil chayqalishi */
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(3deg); }
+}
+.sway {
+  animation: sway 6s ease-in-out infinite;
+  transform-origin: bottom left;
+}
+
+/* Reyting jadvalida foydalanuvchining qatori */
+.ant-table-row.highlighted-row > td {
+  background: var(--accent-soft) !important;
+}
+
+/* ——— Modallar: ekran o'rtasida turadi, 100vh dan oshmaydi ———
+   Sarlavha va tugmalar joyida turadi, faqat ichki qism (body) scroll bo'ladi.
+   Selektorlar 2 klassli — antd'ning o'z (keyinroq yuklanadigan) stillaridan ustun turadi */
+.ant-modal-root .ant-modal-wrap {
+  display: flex;
+  align-items: center;
+  /* balandligi sig'magan holatda tepasi kesilmasin — markaz o'rniga boshidan */
+  align-items: safe center;
+  justify-content: center;
+  overflow: auto;
+}
+.ant-modal-root .ant-modal {
+  top: 0;
+  margin: 16px auto;
+  padding-bottom: 0;
+  max-width: calc(100vw - 32px);
+}
+/* antd v6'da ichki panel klassi -container (v5'da -content edi) — ikkalasi ham yozildi */
+.ant-modal .ant-modal-content,
+.ant-modal .ant-modal-container {
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100vh - 32px);
+  max-height: calc(100dvh - 32px); /* mobil brauzer panellari hisobga olinadi */
+  overflow: hidden;
+}
+.ant-modal .ant-modal-header,
+.ant-modal .ant-modal-footer {
+  flex-shrink: 0; /* body scroll bo'lganda sarlavha va tugmalar siqilmaydi */
+}
+.ant-modal .ant-modal-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--line) transparent;
+  /* scrollbar matnga yopishmasligi uchun modal chetiga suriladi */
+  margin-right: -16px;
+  padding-right: 16px;
+}
+/* Kichik ekranlarda modal deyarli to'liq kenglikni oladi */
+@media (max-width: 640px) {
+  .ant-modal-root .ant-modal {
+    max-width: calc(100vw - 16px);
+    margin: 8px auto;
+  }
+  .ant-modal .ant-modal-content,
+  .ant-modal .ant-modal-container {
+    max-height: calc(100vh - 16px);
+    max-height: calc(100dvh - 16px);
+  }
+}
+.ant-modal .ant-modal-body::-webkit-scrollbar {
+  width: 8px;
+}
+.ant-modal .ant-modal-body::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
+}
+.ant-modal .ant-modal-body::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* ——— Mobil moslashuv ———
+   Faqat tor ekranlarga ta'sir qiladi; PC ko'rinishi o'zgarmaydi */
+
+/* Jadval tor ekranda sahifani kengaytirmasdan o'z ichida yon scroll bo'ladi */
+.ant-table-content {
+  overflow-x: auto;
+}
+
+/* Burger tugmasi kompyuterda ko'rinmaydi */
+@media (min-width: 769px) {
+  .bz-burger {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Header ixchamlashadi: havolalar va foydalanuvchi bloki Drawer menyuga ko'chadi */
+  .bz-header {
+    padding: 0 16px !important;
+  }
+  .bz-nav-desktop,
+  .bz-user-desktop {
+    display: none !important;
+  }
+  .bz-footer {
+    padding: 40px 20px 0 !important;
+  }
+  .page {
+    padding: 0 16px;
+  }
+}
+
+/* Telefonda barmoq bilan bosish qulay bo'lishi uchun kattaroq nishonlar */
+@media (max-width: 640px) {
+  .option-circle-btn {
+    width: 38px !important;
+    height: 38px !important;
+  }
+}
