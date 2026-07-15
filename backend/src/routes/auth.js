@@ -129,9 +129,18 @@ router.post('/refresh', async (req, res) => {
     if (!user) return res.status(401).json({ message: 'Token yaroqsiz' });
     const tokens = generateTokens(user.id, user.role);
 
-    await prisma.refreshToken.delete({ where: { token: refreshToken } });
+    // Eski token darhol o'chirilmaydi — 60 soniyalik "grace" oynasi qoladi.
+    // Ikkita ochiq tab (yoki parallel so'rovlar) bir vaqtda refresh qilsa,
+    // ikkinchisi ham muvaffaqiyatli bo'ladi va foydalanuvchi chiqarib yuborilmaydi.
+    const grace = new Date(Date.now() + 60 * 1000);
+    if (stored.expiresAt > grace) {
+      await prisma.refreshToken.update({ where: { token: refreshToken }, data: { expiresAt: grace } });
+    }
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
     await prisma.refreshToken.create({ data: { token: tokens.refreshToken, userId: user.id, expiresAt } });
+
+    // Muddati o'tgan tokenlar bazada yig'ilib qolmasligi uchun tozalab boramiz
+    await prisma.refreshToken.deleteMany({ where: { expiresAt: { lt: new Date() } } });
 
     res.json(tokens);
   } catch {

@@ -3,6 +3,16 @@ const prisma = require('../utils/prisma');
 const { authenticate, adminOnly } = require('../middleware/auth');
 const { isSafeUrl } = require('../utils/validate');
 
+// answerKey formati: {"1": "A", "2": "B", ...} — kalit savol raqami, qiymat A-D.
+// Noto'g'ri formatdagi kalit saqlansa, studentlar testni umuman topshira olmay qolardi.
+const isValidAnswerKey = (ak) => {
+  if (ak === undefined || ak === null) return true;
+  if (typeof ak !== 'object' || Array.isArray(ak)) return false;
+  const entries = Object.entries(ak);
+  if (entries.length > 500) return false;
+  return entries.every(([k, v]) => /^\d{1,3}$/.test(k) && /^[A-D]$/.test(String(v)));
+};
+
 router.get('/topic/:topicId', async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   let isAdmin = false;
@@ -33,6 +43,7 @@ router.get('/topic/:topicId', async (req, res) => {
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, fileUrl, fileType, questionCount, timeLimit, answerKey } = req.body;
   if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Javoblar kaliti formati noto\'g\'ri' });
   try {
     const quiz = await prisma.quiz.create({
       data: { topicId, fileUrl, fileType, questionCount, timeLimit, answerKey },
@@ -70,6 +81,7 @@ router.get('/:id/results', authenticate, adminOnly, async (req, res) => {
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { fileUrl, fileType, questionCount, timeLimit, answerKey } = req.body;
   if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Javoblar kaliti formati noto\'g\'ri' });
   try {
     const quiz = await prisma.quiz.update({
       where: { id: req.params.id },

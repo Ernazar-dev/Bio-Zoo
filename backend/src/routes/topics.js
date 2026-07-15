@@ -4,7 +4,9 @@ const { authenticate, adminOnly } = require('../middleware/auth');
 const { isSafeUrl } = require('../utils/validate');
 
 router.get('/', async (req, res) => {
-  const { categoryId } = req.query;
+  // Query param massiv bo'lib kelishi mumkin (?categoryId=a&categoryId=b) —
+  // faqat string qabul qilamiz, aks holda Prisma xatoga uchraydi
+  const categoryId = typeof req.query.categoryId === 'string' ? req.query.categoryId : undefined;
   const topics = await prisma.topic.findMany({
     where: categoryId ? { categoryId } : {},
     orderBy: { order: 'asc' },

@@ -12,24 +12,59 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// Sessiya tugatilganda faqat auth kalitlarni tozalaymiz (localStorage.clear()
+// mavzu sozlamalarini ham o'chirib yuborardi) va login sahifasiga o'tamiz
+const forceLogout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('auth-storage'); // zustand persist nusxasi
+  if (window.location.pathname !== '/login') window.location.href = '/login';
+};
+
+// Bir vaqtda bir nechta so'rov 401 olsa, faqat BITTA refresh yuboriladi.
+// Aks holda birinchi refresh tokenni almashtirib, qolganlari eski token
+// bilan muvaffaqiyatsiz tugab, foydalanuvchi bekorga login sahifasiga otilardi.
+let refreshPromise: Promise<string> | null = null;
+
+const doRefresh = async (): Promise<string> => {
+  const refreshToken = localStorage.getItem('refreshToken');
+  if (!refreshToken) {
+    const err: any = new Error('No refresh token');
+    err.forceLogout = true;
+    throw err;
+  }
+  try {
+    const res = await axios.post(`${BASE_URL}/auth/refresh`, { refreshToken });
+    localStorage.setItem('accessToken', res.data.accessToken);
+    localStorage.setItem('refreshToken', res.data.refreshToken);
+    return res.data.accessToken;
+  } catch (err: any) {
+    // Faqat server "token yaroqsiz" (401) desa sessiyani tugatamiz.
+    // Internet uzilishi yoki server vaqtincha ishlamasligi kabi holatlarda
+    // foydalanuvchini chiqarib yubormaymiz — keyingi so'rovda qayta urinamiz.
+    if (err.response?.status === 401) err.forceLogout = true;
+    throw err;
+  }
+};
+
 api.interceptors.response.use(
   (res) => res,
   async (error) => {
     const original = error.config;
-    if (error.response?.status === 401 && !original._retry) {
+    const isAuthCall = typeof original?.url === 'string' && original.url.includes('/auth/');
+    if (error.response?.status === 401 && original && !original._retry && !isAuthCall) {
       original._retry = true;
-      const refreshToken = localStorage.getItem('refreshToken');
-      if (refreshToken) {
-        try {
-          const res = await axios.post(`${BASE_URL}/auth/refresh`, { refreshToken });
-          localStorage.setItem('accessToken', res.data.accessToken);
-          localStorage.setItem('refreshToken', res.data.refreshToken);
-          original.headers.Authorization = `Bearer ${res.data.accessToken}`;
-          return api(original);
-        } catch {
-          localStorage.clear();
-          window.location.href = '/login';
+      try {
+        if (!refreshPromise) {
+          refreshPromise = doRefresh().finally(() => {
+            refreshPromise = null;
+          });
         }
+        const token = await refreshPromise;
+        original.headers.Authorization = `Bearer ${token}`;
+        return api(original);
+      } catch (err: any) {
+        if (err?.forceLogout) forceLogout();
       }
     }
     return Promise.reject(error);

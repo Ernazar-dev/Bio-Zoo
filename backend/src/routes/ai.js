@@ -25,7 +25,9 @@ ${context ? `Mavzu bo'yicha ma'lumot:\n${context}` : ''}`;
 
 // Mavzu matnidan qisqa kontekst yig'ish (nazariy materiallar)
 async function buildContext(topicId) {
-  if (!topicId) return { title: '', context: '' };
+  // Faqat string qabul qilinadi — obyekt yuborib Prisma so'rovini
+  // manipulyatsiya qilishning oldini oladi
+  if (!topicId || typeof topicId !== 'string') return { title: '', context: '' };
   const topic = await prisma.topic.findUnique({
     where: { id: topicId },
     include: { materials: { where: { type: { in: ['TEXT'] } }, take: 3 } },

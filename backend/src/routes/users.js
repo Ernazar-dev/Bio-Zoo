@@ -125,6 +125,9 @@ router.get('/me/portfolio', authenticate, async (req, res) => {
 
 // User activity history
 router.get('/me/activity', authenticate, async (req, res) => {
+  // userId bo'lmasa (admin) filtrsiz so'rov BARCHA foydalanuvchilar
+  // faoliyatini qaytarib yuborardi — bo'sh ro'yxat qaytaramiz
+  if (!req.user.userId) return res.json([]);
   const activities = await prisma.userActivity.findMany({
     where: { userId: req.user.userId },
     orderBy: { createdAt: 'desc' },
