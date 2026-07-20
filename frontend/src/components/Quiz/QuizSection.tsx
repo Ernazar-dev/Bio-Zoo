@@ -282,6 +282,7 @@ const QuizSection: React.FC<Props> = ({
   };
 
   const handleSubmit = () => {
+    const unanswered = Array.from({ length: activeQuiz!.questionCount }, (_, i) => i + 1).filter(n => !answers[String(n)]);
     if (unanswered.length > 0) {
       Modal.confirm({
         title: 'Diqqat',
