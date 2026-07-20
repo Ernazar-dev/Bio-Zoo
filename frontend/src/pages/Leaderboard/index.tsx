@@ -25,7 +25,7 @@ const metals = [
   },
   {
     key: 'silver',
-    label: 'Kumush',
+    label: 'Gúmis',
     ribbon: '#3f6db3',
     ribbonDark: '#2d5290',
     metal: ['#ffffff', '#e9eef4', '#b6c0cb', '#8794a2'],
@@ -480,10 +480,10 @@ const Leaderboard: React.FC = () => {
       <div className="fade-in-up" style={{ maxWidth: 720, margin: '0 auto', padding: '0 24px' }}>
         <span className="eyebrow" style={{ fontSize: '16px' }}><Leaf size={12} /> Reyting</span>
         <h1 className="display" style={{ fontSize: 'clamp(32px, 4.5vw, 48px)', margin: '14px 0 10px' }}>
-          Eng faol <em>studentlar</em>
+          Eń belsendi <em>studentler</em>
         </h1>
         <p style={{ color: 'var(--muted)', fontSize: 15, marginBottom: 48 }}>
-          Test natijalari orqali to'plangan ballar bo'yicha
+          Test nátijeleri arqalı toplanǵan ballar boyınsha
         </p>
 
         {isLoading ? (

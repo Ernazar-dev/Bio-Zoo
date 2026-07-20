@@ -28,23 +28,23 @@ import './Home.css';
 
 /* Hero ichidagi mini-xususiyatlar */
 const heroFeatures = [
-  { icon: <BookOutlined />, label: "Interaktiv\no'qitish" },
-  { icon: <RobotOutlined />, label: "Sun'iy intellekt\nyordamchisi" },
-  { icon: <BarChartOutlined />, label: 'Adaptiv testlar\nva baholash' },
-  { icon: <FolderOpenOutlined />, label: 'Portfolio\nva tahlil' },
+  { icon: <BookOutlined />, label: "Interaktiv\noqıtıw" },
+  { icon: <RobotOutlined />, label: "Jasandı intellekt\njárdemshisi" },
+  { icon: <BarChartOutlined />, label: 'Adaptiv testler\nhám baholaw' },
+  { icon: <FolderOpenOutlined />, label: 'Portfolio\nhám analiz' },
 ];
 
 /* Asosiy funksiya kartochkalari */
 const featureCards = [
-  { icon: <ReadOutlined />, color: '#1b8a4e', bg: '#e6f4ea', title: 'Nazariya', sub: "Ma'ruza va materiallar", to: '/categories' },
-  { icon: <PlayCircleOutlined />, color: '#7c4dff', bg: '#f0eaff', title: 'Video darslar', sub: "Vizual o'qitish", to: '/categories' },
-  { icon: <PartitionOutlined />, color: '#f57c00', bg: '#fff3e0', title: 'Interaktiv sxema', sub: 'Bilish xaritalari', to: '/categories' },
-  { icon: <RobotOutlined />, color: '#0288d1', bg: '#e1f5fe', title: 'AI yordamchi', sub: 'Savol bering', to: '/categories' },
-  { icon: <FileDoneOutlined />, color: '#00acc1', bg: '#e0f7fa', title: 'Testlar', sub: 'Bilimingizni tekshiring', to: '/categories' },
-  { icon: <BulbOutlined />, color: '#f9a825', bg: '#fff8e1', title: 'Keyslar', sub: 'Amaliy vaziyatlar', to: '/categories' },
-  { icon: <FolderOpenOutlined />, color: '#43a047', bg: '#e8f5e9', title: 'Portfolio', sub: 'Ishlaringizni saqlang', to: '/categories' },
-  { icon: <BarChartOutlined />, color: '#26a69a', bg: '#e0f2f1', title: 'Baholash', sub: 'Natijalaringiz', to: '/leaderboard' },
-  { icon: <HeartOutlined />, color: '#ec407a', bg: '#fce4ec', title: 'Refleksiya', sub: "O'z-o'zingizni tahlil qiling", to: '/leaderboard' },
+  { icon: <ReadOutlined />, color: '#1b8a4e', bg: '#e6f4ea', title: 'Teoriya', sub: "Leksiyalar hám materiallar", to: '/categories' },
+  { icon: <PlayCircleOutlined />, color: '#7c4dff', bg: '#f0eaff', title: 'Video sabaqlar', sub: "Vizual oqıtıw", to: '/categories' },
+  { icon: <PartitionOutlined />, color: '#f57c00', bg: '#fff3e0', title: 'Interaktiv sxema', sub: 'Bilim kartaları', to: '/categories' },
+  { icon: <RobotOutlined />, color: '#0288d1', bg: '#e1f5fe', title: 'AI járdemshi', sub: 'Soraw beriń', to: '/categories' },
+  { icon: <FileDoneOutlined />, color: '#00acc1', bg: '#e0f7fa', title: 'Testler', sub: 'Bilimińizdi tekseriń', to: '/categories' },
+  { icon: <BulbOutlined />, color: '#f9a825', bg: '#fff8e1', title: 'Keysler', sub: 'Ámeliy jaǵdaylar', to: '/categories' },
+  { icon: <FolderOpenOutlined />, color: '#43a047', bg: '#e8f5e9', title: 'Portfolio', sub: 'Jumıslarıńızdı saqlań', to: '/categories' },
+  { icon: <BarChartOutlined />, color: '#26a69a', bg: '#e0f2f1', title: 'Baholaw', sub: 'Nátijelerińiz', to: '/leaderboard' },
+  { icon: <HeartOutlined />, color: '#ec407a', bg: '#fce4ec', title: 'Refleksiya', sub: "Ózińizdi analiz etiń", to: '/leaderboard' },
 ];
 
 const medalColors = ['#f6b93b', '#b0bec5', '#cd7f32'];
@@ -106,10 +106,10 @@ const Home: React.FC = () => {
   };
 
   const activityStats = [
-    { num: stats?.topics ?? '—', label: 'Mavzular' },
+    { num: stats?.topics ?? '—', label: 'Temalar' },
     { num: isStudent ? `${progress?.percent ?? 0}%` : '—', label: 'Progress' },
     { num: isStudent ? user!.points : '—', label: 'Ball' },
-    { num: stats?.students ?? '—', label: 'Studentlar' },
+    { num: stats?.students ?? '—', label: 'Studentler' },
   ];
 
   return (
@@ -119,8 +119,8 @@ const Home: React.FC = () => {
         <div className="bh-hero-left">
           <h1 className="bh-hero-title">Biometod AI</h1>
           <p className="bh-hero-sub">
-            Biometod AI — biologiya fanlarini o'rganishga
-            innovatsion, aqlli yondashuv!
+            Biometod AI — biologiya pánlerin úyreniwge
+            innovaciyalıq, aqıllı jondasıw!
           </p>
 
           <div className="bh-hero-feats">
@@ -140,7 +140,7 @@ const Home: React.FC = () => {
               onClick={() => navigate('/categories')}
               style={{ height: 46, padding: '0 24px', fontWeight: 700 }}
             >
-              O'qishni boshlash
+              Oqıwdı baslaw
             </Button>
             <Button
               size="large"
@@ -149,14 +149,14 @@ const Home: React.FC = () => {
               onClick={() => featuresRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
               style={{ height: 46, padding: '0 22px', color: '#fff', borderColor: 'rgba(255,255,255,0.55)' }}
             >
-              Qanday ishlaydi?
+              Ol qalay isleydi?
             </Button>
           </div>
         </div>
 
         {/* O'ng panel — faoliyat */}
         <aside className="bh-hero-panel">
-          <span className="bh-panel-title">Faoliyatingiz</span>
+          <span className="bh-panel-title">Belsendiligińiz</span>
           <div className="bh-panel-stats">
             {activityStats.map((s) => (
               <div className="bh-panel-stat" key={s.label}>
@@ -168,7 +168,7 @@ const Home: React.FC = () => {
 
           {nextTopic && (
             <>
-              <span className="bh-panel-title" style={{ marginTop: 14 }}>Keyingi mavzu</span>
+              <span className="bh-panel-title" style={{ marginTop: 14 }}>Keyingi tema</span>
               <div className="bh-next-topic">
                 {nextTopic.coverImage ? (
                   <img src={nextTopic.coverImage} alt="" className="bh-next-img" />
@@ -191,7 +191,7 @@ const Home: React.FC = () => {
                 onClick={() => navigate(`/topics/${nextTopic.id}`)}
                 style={{ height: 42, fontWeight: 700, marginTop: 12 }}
               >
-                Davom ettirish <RightOutlined />
+                Dawam etiw <RightOutlined />
               </Button>
             </>
           )}
@@ -204,7 +204,7 @@ const Home: React.FC = () => {
           size="large"
           allowClear
           prefix={<SearchOutlined style={{ color: 'var(--muted)' }} />}
-          placeholder="Mavzu, tushuncha yoki savolni qidiring..."
+          placeholder="Tema, túsinik yamasa sorawdı izleń..."
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
@@ -225,9 +225,9 @@ const Home: React.FC = () => {
       <div className="bh-bottom">
         <section className="bh-topics card-surface">
           <div className="bh-topics-head">
-            <h2 className="bh-h2">Mavzular</h2>
+            <h2 className="bh-h2">Temalar</h2>
             <Button type="primary" size="small" onClick={() => navigate('/categories')} style={{ fontWeight: 600 }}>
-              Barcha mavzular <ArrowRightOutlined />
+              Barlıq temalar <ArrowRightOutlined />
             </Button>
           </div>
 
@@ -256,7 +256,7 @@ const Home: React.FC = () => {
                 </Link>
               ))}
               {filteredTopics.length === 0 && (
-                <div className="bh-empty">Hech narsa topilmadi</div>
+                <div className="bh-empty">Hesh nárse tabılmadı</div>
               )}
             </div>
             <button className="bh-rail-btn bh-rail-next" onClick={() => scrollRail(1)} aria-label="Keyingi">
@@ -268,26 +268,26 @@ const Home: React.FC = () => {
         <aside className="bh-side">
           {/* Bilim darajasi */}
           <div className="card-surface bh-side-card">
-            <h3 className="bh-h3">Bilim darajangiz</h3>
+            <h3 className="bh-h3">Bilim dárejeńiz</h3>
             {isStudent ? (
               <div className="bh-donut-row">
                 <DonutChart mastered={donut.mastered} learning={donut.learning} percent={donut.percent} />
                 <div className="bh-legend">
-                  <span><i style={{ background: '#1b8a4e' }} /> O'zlashtirilgan <b>{donut.mastered}%</b></span>
-                  <span><i style={{ background: '#f9a825' }} /> O'rganishda <b>{donut.learning}%</b></span>
-                  <span><i style={{ background: 'var(--line)' }} /> Qoladi <b>{donut.remaining}%</b></span>
+                  <span><i style={{ background: '#1b8a4e' }} /> Ózlestirilgen <b>{donut.mastered}%</b></span>
+                  <span><i style={{ background: '#f9a825' }} /> Úyrenilmekte <b>{donut.learning}%</b></span>
+                  <span><i style={{ background: 'var(--line)' }} /> Qaladı <b>{donut.remaining}%</b></span>
                 </div>
               </div>
             ) : (
               <p style={{ fontSize: 13, color: 'var(--muted)', margin: 0, lineHeight: 1.7 }}>
-                Progressingizni kuzatish uchun <Link to="/login" style={{ fontWeight: 600 }}>tizimga kiring</Link>.
+                Progressińizdi baqlap barıw ushın <Link to="/login" style={{ fontWeight: 600 }}>dizimge kiriń</Link>.
               </p>
             )}
           </div>
 
           {/* Eng faol foydalanuvchilar */}
           <div className="card-surface bh-side-card">
-            <h3 className="bh-h3">Eng faol foydalanuvchilar</h3>
+            <h3 className="bh-h3">Eń belsendi paydalanıwshılar</h3>
             <div className="bh-leaders">
               {(leaders ?? []).slice(0, 3).map((u, i) => (
                 <div className="bh-leader" key={u.id}>
@@ -298,11 +298,11 @@ const Home: React.FC = () => {
                 </div>
               ))}
               {(!leaders || leaders.length === 0) && (
-                <span style={{ fontSize: 13, color: 'var(--muted)' }}>Hozircha ma'lumot yo'q</span>
+                <span style={{ fontSize: 13, color: 'var(--muted)' }}>Házirshe maǵlıwmat joq</span>
               )}
             </div>
             <Link to="/leaderboard" className="bh-side-link">
-              Reytingni ko'rish <ArrowRightOutlined />
+              Reytingdi kóriw <ArrowRightOutlined />
             </Link>
           </div>
         </aside>

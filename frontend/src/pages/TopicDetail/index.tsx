@@ -202,7 +202,7 @@ const DocumentCard = ({ material }: { material: Material }) => {
         })
         .catch((err) => {
           console.error("Mammoth error:", err);
-          setWordError("Word hujjatini sayt ichida ko'rsatishda xatolik yuz berdi. Faylni quyidagi tugma orqali yuklab olishingiz mumkin.");
+          setWordError("Word hújjetin sayt ishinde kórsetiwde qátelik júz berdi. Fayldi tómendegi túyme arqalı júklep alıwıńız múmkin.");
         })
         .finally(() => {
           setLoadingWord(false);
@@ -263,12 +263,12 @@ const DocumentCard = ({ material }: { material: Material }) => {
           <div>
             <Text style={{ color: 'var(--ink)', fontWeight: 600, fontSize: 15.5, display: 'block' }}>{material.title}</Text>
             <Text style={{ color: 'var(--muted)', fontSize: 12.5 }}>
-              {isPdf ? 'PDF hujjat' : isWord ? 'Word hujjati' : isOtherOffice ? 'Office hujjati' : 'Fayl'}
+              {isPdf ? 'PDF hújjet' : isWord ? 'Word hújjeti' : isOtherOffice ? 'Office hújjeti' : 'Fayl'}
             </Text>
           </div>
         </Space>
         <Button size="small" icon={<DownloadOutlined />} href={url} target="_blank">
-          Yuklab olish
+          Júklep alıw
         </Button>
       </div>
 
@@ -301,7 +301,7 @@ const DocumentCard = ({ material }: { material: Material }) => {
               border: '1px solid var(--line)',
               borderRadius: 12,
             }}>
-              <Spin tip="Word hujjati yuklanmoqda va qayta ishlanmoqda..." />
+              <Spin tip="Word hújjeti júklenbekte hám qayta islenbekte..." />
             </div>
           )}
           {wordError && (
@@ -363,14 +363,14 @@ const DocumentCard = ({ material }: { material: Material }) => {
           textAlign: 'center',
         }}>
           <Text style={{ color: 'var(--ink)', fontWeight: 600, fontSize: 15, marginBottom: 8, display: 'block' }}>
-            Lokal kompyuterda Excel/PowerPoint hujjatlarini onlayn ko'rib bo'lmaydi
+            Lokal kompyuterde Excel/PowerPoint hújjetlerin onlayn kórip bolmaydı
           </Text>
           <Text type="secondary" style={{ marginBottom: 16, maxWidth: 500, display: 'block' }}>
-            Microsoft Office Online xizmati Excel yoki PowerPoint faylini o'qishi uchun fayl internetda (ommaviy havolada) bo'lishi kerak.
-            Lokal sinovlar uchun faylni <strong>PDF formatida</strong> yuklashingizni tavsiya etamiz — PDF sayt ichida muammosiz ochiladi.
+            Microsoft Office Online xızmeti Excel yamasa PowerPoint faylin oqıwı ushın fayl internette (jámiyetlik siltewde) bolıwı kerek.
+            Lokal sınaqlar ushın fayldi <strong>PDF formatında</strong> júklep alıwıńızdı usınıs etemiz — PDF sayt ishinde mashqalassız ashıladı.
           </Text>
           <Button href={url} target="_blank" type="primary" icon={<DownloadOutlined />}>
-            Faylni yuklab olish
+            Fayldi júklep alıw
           </Button>
         </div>
       )}
@@ -385,7 +385,7 @@ const DocumentCard = ({ material }: { material: Material }) => {
           border: '1px solid var(--line)',
           borderRadius: 12,
         }}>
-          <Spin tip="Fayl turi aniqlanmoqda..." />
+          <Spin tip="Fayl túri anıqlanbaqta..." />
         </div>
       )}
 
@@ -402,8 +402,8 @@ const DocumentCard = ({ material }: { material: Material }) => {
           padding: 24,
           textAlign: 'center',
         }}>
-          <Text type="secondary" style={{ marginBottom: 16 }}>Ushbu fayl turini brauzerda onlayn ko'rib bo'lmaydi.</Text>
-          <Button href={url} target="_blank" icon={<DownloadOutlined />}>Faylni yuklab olish</Button>
+          <Text type="secondary" style={{ marginBottom: 16 }}>Bul fayl túrin brauzerde onlayn kórip bolmaydı.</Text>
+          <Button href={url} target="_blank" icon={<DownloadOutlined />}>Fayldi júklep alıw</Button>
         </div>
       )}
     </div>
@@ -412,7 +412,7 @@ const DocumentCard = ({ material }: { material: Material }) => {
 
 /* ——— Video darslar to'plami ——— */
 const VideoGrid: React.FC<{ videos: any[] }> = ({ videos }) => {
-  if (!videos.length) return <EmptyState text="Bu mavzuga hali video darslar qo'shilmagan" />;
+  if (!videos.length) return <EmptyState text="Bul temaga házirshe video sabaqlar qosılmaǵan" />;
   return (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 420px), 1fr))', gap: 20 }}>
       {videos.map(video => {
@@ -518,7 +518,7 @@ const GameGrid: React.FC<{ games: any[] }> = ({ games }) => (
       }
     `}</style>
     {!games.length
-      ? <EmptyState text="Bu mavzuga hali o'yinlar qo'shilmagan" />
+      ? <EmptyState text="Bul temaga házirshe oyinlar qosılmaǵan" />
       : <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 340px), 1fr))', gap: 20 }}>
           {games.map(game => (
             <div key={game.id} className="game-card">
@@ -545,7 +545,7 @@ const GameGrid: React.FC<{ games: any[] }> = ({ games }) => (
                 rel="noopener noreferrer"
                 style={{ height: 44, borderRadius: 12, marginTop: 'auto' }}
               >
-                O'yinni boshlash
+                Oyindı baslaw
               </Button>
             </div>
           ))}
@@ -630,31 +630,31 @@ const TopicDetail: React.FC = () => {
 
   const navGroups: NavGroup[] = [
     {
-      key: 'oquv', icon: <ReadOutlined />, label: "O'quv materiallari",
+      key: 'oquv', icon: <ReadOutlined />, label: "Oqıw materialları",
       children: [
-        { key: 'nazariy', label: 'Nazariy materiallar', count: nazariy.length },
-        { key: 'prezentatsiya', label: 'Prezentatsiyalar', count: prezentatsiya.length },
-        { key: 'video', label: 'Video darslar', count: videos.length },
+        { key: 'nazariy', label: 'Teoriyalıq materiallar', count: nazariy.length },
+        { key: 'prezentatsiya', label: 'Prezentaciyalar', count: prezentatsiya.length },
+        { key: 'video', label: 'Video sabaqlar', count: videos.length },
         { key: 'infografika', label: 'Infografikalar', count: infografikaCount },
       ],
     },
     {
-      key: 'interaktiv', icon: <ExperimentOutlined />, label: "Interaktiv o'qish",
+      key: 'interaktiv', icon: <ExperimentOutlined />, label: "Interaktiv oqıw",
       children: [
-        { key: '3d', label: '3D modellar', count: (model3D ? 1 : 0) + models3d.length },
-        { key: 'simulyatsiya', label: 'Simulyatsiya', count: simulations.length },
+        { key: '3d', label: '3D modeller', count: (model3D ? 1 : 0) + models3d.length },
+        { key: 'simulyatsiya', label: 'Simulyaciya', count: simulations.length },
         { key: 'virtual-lab', label: 'Virtual laboratoriya', count: virtualLabs.length },
       ],
     },
     {
-      key: 'ai', icon: <RobotOutlined />, label: 'AI Yordamchi',
+      key: 'ai', icon: <RobotOutlined />, label: 'AI Járdemshi',
       children: [{ key: 'ai-chat', label: 'AI Chat' }],
     },
     {
-      key: 'baholash', icon: <FileDoneOutlined />, label: 'Baholash',
+      key: 'baholash', icon: <FileDoneOutlined />, label: 'Baholaw',
       children: [
-        { key: 'test', label: 'Testlar', count: topic.quizzes.length },
-        { key: 'oyinlar', label: "O'yinlar", count: playGames.length },
+        { key: 'test', label: 'Testler', count: topic.quizzes.length },
+        { key: 'oyinlar', label: "Oyinlar", count: playGames.length },
       ],
     },
   ];
@@ -669,14 +669,14 @@ const TopicDetail: React.FC = () => {
   const renderContent = () => {
     switch (activeKey) {
       case 'nazariy':
-        return <MaterialList items={nazariy} emptyText="Bu mavzuga hali nazariy materiallar qo'shilmagan" />;
+        return <MaterialList items={nazariy} emptyText="Bul temaga házirshe teoriyalıq materiallar qosılmaǵan" />;
       case 'prezentatsiya':
-        return <MaterialList items={prezentatsiya} emptyText="Bu mavzuga hali prezentatsiyalar qo'shilmagan" />;
+        return <MaterialList items={prezentatsiya} emptyText="Bul temaga házirshe prezentaciyalar qosılmaǵan" />;
       case 'video':
         return <VideoGrid videos={videos} />;
       case 'infografika':
         return infografikaCount === 0
-          ? <EmptyState text="Bu mavzuga hali infografikalar qo'shilmagan" />
+          ? <EmptyState text="Bul temaga házirshe infografikalar qosılmaǵan" />
           : (
             <div>
               <InfographicViewer infographics={infographics} topicId={topic.id} />
@@ -695,15 +695,15 @@ const TopicDetail: React.FC = () => {
               <InteractiveViewer items={models3d} />
             </div>
           )
-          : <EmptyState text="Bu mavzuga hali 3D model qo'shilmagan" />;
+          : <EmptyState text="Bul temaga házirshe 3D model qosılmaǵan" />;
       case 'simulyatsiya':
         return simulations.length
           ? <InteractiveViewer items={simulations} />
-          : <ComingSoon title="Simulyatsiya" text="Bu mavzuga hali simulyatsiya qo'shilmagan." />;
+          : <ComingSoon title="Simulyaciya" text="Bul temaga házirshe simulyaciya qosılmaǵan." />;
       case 'virtual-lab':
         return virtualLabs.length
           ? <InteractiveViewer items={virtualLabs} />
-          : <ComingSoon title="Virtual laboratoriya" text="Bu mavzuga hali virtual laboratoriya qo'shilmagan." />;
+          : <ComingSoon title="Virtual laboratoriya" text="Bul temaga házirshe virtual laboratoriya qosılmaǵan." />;
       case 'ai-chat':
         return <AiAssistant topicId={topic.id} topicTitle={topic.title} />;
       case 'test':
@@ -777,7 +777,7 @@ const TopicDetail: React.FC = () => {
               </div>
               <div>
                 <Text strong style={{ fontSize: 16, color: 'var(--ink)', display: 'block' }}>{topic.title}</Text>
-                <Text type="secondary" style={{ display: 'block', fontSize: 12.5 }}>Mavzu yuzasidan test topshirish jarayoni</Text>
+                <Text type="secondary" style={{ display: 'block', fontSize: 12.5 }}>Tema boyınsha test tapsırıw procesi</Text>
               </div>
             </div>
             <Button
@@ -785,15 +785,15 @@ const TopicDetail: React.FC = () => {
               type="text"
               onClick={() => {
                 Modal.confirm({
-                  title: 'Testdan chiqish',
-                  content: 'Haqiqatan ham test topshirishni to\'xtatmoqchimisiz? Barcha kiritilgan javoblaringiz o\'chib ketadi.',
-                  okText: 'Ha, chiqish',
-                  cancelText: 'Yo\'q, davom etish',
+                  title: 'Testten shıgıw',
+                  content: 'Haqıyqattan da test tapsırıwdı toqtatpaqshısız ba? Barlıq kiritilgen juwaplarıńız óship ketedi.',
+                  okText: 'Awa, shıgıw',
+                  cancelText: 'Yaq, dawam etiw',
                   onOk() { setExamStarted(false); },
                 });
               }}
             >
-              Testdan chiqish
+              Testten shıgıw
             </Button>
           </div>
         ) : (
@@ -801,8 +801,8 @@ const TopicDetail: React.FC = () => {
             <Breadcrumb
               style={{ marginBottom: 16 }}
               items={[
-                { title: <Link to="/">Bosh sahifa</Link> },
-                { title: <Link to="/categories">Bo'limlar</Link> },
+                { title: <Link to="/">Bas bet</Link> },
+                { title: <Link to="/categories">Bólimler</Link> },
                 topic.category && { title: <Link to={`/categories/${topic.category.slug}`}>{topic.category.name}</Link> },
                 { title: topic.title },
               ].filter(Boolean) as any}

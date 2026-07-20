@@ -32,16 +32,16 @@ function clearRateLimit() {
 }
 
 const loginRules = [
-  { required: true, message: 'Login kiriting!' },
-  { min: 3, message: 'Kamida 3 ta belgi!' },
-  { max: 50, message: 'Juda uzun!' },
-  { pattern: /^[a-zA-Z0-9._@-]+$/, message: 'Faqat harf, raqam va . _ @ -' },
+  { required: true, message: 'Login kiritiń!' },
+  { min: 3, message: 'Keminde 3 belgi!' },
+  { max: 50, message: 'Juda uzın!' },
+  { pattern: /^[a-zA-Z0-9._@-]+$/, message: 'Faqat háripler, sanlar hám . _ @ -' },
 ];
 
 const passwordRules = [
-  { required: true, message: 'Parol kiriting!' },
-  { min: 6, message: 'Kamida 6 ta belgi!' },
-  { max: 100, message: 'Juda uzun!' },
+  { required: true, message: 'Parol kiritiń!' },
+  { min: 6, message: 'Keminde 6 belgi!' },
+  { max: 100, message: 'Juda uzın!' },
 ];
 
 const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => {
@@ -106,7 +106,7 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
         password: values.password,
       });
       clearRateLimit();
-      message.success('Xush kelibsiz!');
+      message.success('Xosh keldińiz!');
       setAuth(data.user, data.accessToken, data.refreshToken);
       navigate(data.user.role === 'ADMIN' ? '/admin' : '/categories');
     } catch (error: any) {
@@ -118,12 +118,12 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
       triggerShake();
 
       if (newAttempts >= MAX_ATTEMPTS) {
-        message.error("Juda ko'p urinish! 2 daqiqa kuting.");
+        message.error("Juda kóp urınıs! 2 minut kútiń.");
       } else {
         const left = MAX_ATTEMPTS - newAttempts;
         message.error(
           error.response?.data?.message ||
-            `Login yoki parol xato. ${left} ta urinish qoldi.`
+            `Login yamasa parol qáte. ${left} urınıs qaldı.`
         );
       }
     } finally {
@@ -140,12 +140,12 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
         password: values.password,
       });
       clearRateLimit();
-      message.success("Ro'yxatdan muvaffaqiyatli o'tdingiz!");
+      message.success("Dizimnen tabıslı óttińiz!");
       setAuth(data.user, data.accessToken, data.refreshToken);
       navigate('/categories');
     } catch (error: any) {
       triggerShake();
-      message.error(error.response?.data?.message || "Ro'yxatdan o'tishda xatolik yuz berdi");
+      message.error(error.response?.data?.message || "Dizimnen ótiwde qátelik júz berdi");
     } finally {
       setLoading(false);
     }
@@ -202,7 +202,7 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
               Biometod<span style={{ color: 'var(--accent)' }}> AI</span>
             </h1>
             <p style={{ fontSize: 13, color: 'var(--muted)', margin: 0 }}>
-              Aqlli biologiya ta'limi platformasi
+              Aqıllı biologiya bilimi platforması
             </p>
           </div>
 
@@ -216,14 +216,14 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
             items={[
               {
                 key: 'login',
-                label: 'Kirish',
+                label: 'Kiriw',
                 children: (
                   <Form name="login" onFinish={handleLogin} autoComplete="off" layout="vertical" requiredMark={false}>
                     <Form.Item name="login" label="Login" rules={loginRules}>
                       <Input
                         size="large"
                         prefix={<UserOutlined style={{ color: 'var(--muted)' }} />}
-                        placeholder="Loginni kiriting"
+                        placeholder="Login kiritiń"
                         disabled={isLocked}
                         autoComplete="username"
                       />
@@ -232,14 +232,14 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
                       <Input.Password
                         size="large"
                         prefix={<LockOutlined style={{ color: 'var(--muted)' }} />}
-                        placeholder="Parolni kiriting"
+                        placeholder="Parol kiritiń"
                         disabled={isLocked}
                         autoComplete="current-password"
                       />
                     </Form.Item>
                     <Form.Item style={{ marginBottom: 8 }}>
                       <Button type="primary" htmlType="submit" block size="large" loading={loading} disabled={isLocked} style={{ height: 46 }}>
-                        {isLocked ? `${lockLeft} soniya kuting` : 'Kirish'}
+                        {isLocked ? `${lockLeft} sekund kútiń` : 'Kiriw'}
                       </Button>
                     </Form.Item>
                   </Form>
@@ -247,22 +247,22 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
               },
               {
                 key: 'register',
-                label: "Ro'yxatdan o'tish",
+                label: "Dizimnen ótiw",
                 children: (
                   <Form name="register" onFinish={handleRegister} autoComplete="off" layout="vertical" requiredMark={false}>
                     <Form.Item
                       name="name"
-                      label="To'liq ismingiz"
+                      label="Tolıq atıńız"
                       rules={[
-                        { required: true, message: 'Ismingizni kiriting!' },
-                        { min: 3, message: 'Kamida 3 ta belgi!' },
-                        { max: 80, message: 'Juda uzun!' },
+                        { required: true, message: 'Atıńızdı kiritiń!' },
+                        { min: 3, message: 'Keminde 3 belgi!' },
+                        { max: 80, message: 'Juda uzın!' },
                       ]}
                     >
                       <Input
                         size="large"
                         prefix={<EditOutlined style={{ color: 'var(--muted)' }} />}
-                        placeholder="Ism va familiyangiz"
+                        placeholder="Atıńız hám familiyańız"
                         disabled={loading}
                       />
                     </Form.Item>
@@ -270,7 +270,7 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
                       <Input
                         size="large"
                         prefix={<UserOutlined style={{ color: 'var(--muted)' }} />}
-                        placeholder="Yangi login"
+                        placeholder="Jaña login"
                         disabled={loading}
                         autoComplete="username"
                       />
@@ -279,14 +279,14 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
                       <Input.Password
                         size="large"
                         prefix={<LockOutlined style={{ color: 'var(--muted)' }} />}
-                        placeholder="Yangi parol"
+                        placeholder="Parol kiritiń"
                         disabled={loading}
                         autoComplete="new-password"
                       />
                     </Form.Item>
                     <Form.Item style={{ marginBottom: 8 }}>
                       <Button type="primary" htmlType="submit" block size="large" loading={loading} style={{ height: 46 }}>
-                        Ro'yxatdan o'tish
+                        Dizimnen ótiw
                       </Button>
                     </Form.Item>
                   </Form>
@@ -297,18 +297,18 @@ const Auth: React.FC<{ mode?: 'login' | 'register' }> = ({ mode = 'login' }) => 
 
           {isLocked && activeTab === 'login' && (
             <div className="auth-lockbar">
-              Juda ko'p urinish — {lockLeft} soniya kutish kerak
+              Juda kóp urınıs — {lockLeft} sekund kútiw kerek
             </div>
           )}
 
           {attempts > 0 && !isLocked && activeTab === 'login' && (
             <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
-              {attempts} / {MAX_ATTEMPTS} urinish ishlatildi
+              {attempts} / {MAX_ATTEMPTS} urınıs qollanıldı
             </p>
           )}
 
           <p style={{ marginTop: 18, textAlign: 'center', fontSize: 12, color: 'var(--muted)', borderTop: '1px solid var(--line)', paddingTop: 16 }}>
-            © {new Date().getFullYear()} Biometod AI · Ruxsatsiz kirish taqiqlanadi
+            © {new Date().getFullYear()} Biometod AI · Ruxsatsız kiriw qadaǵan etiledi
           </p>
         </div>
       </div>

@@ -9,7 +9,7 @@ const aiLimiter = rateLimit({
   limit: 15,
   standardHeaders: 'draft-8',
   legacyHeaders: false,
-  message: { message: "AI so'rovlari ko'payib ketdi, birozdan so'ng urinib ko'ring" },
+  message: { message: "AI sorawları kóbeyip ketti, azǵantaydan soń urınıp kórıń" },
 });
 
 // Provayderni env orqali ulash mumkin (keyin kalit qo'shiladi):
@@ -18,10 +18,10 @@ const aiLimiter = rateLimit({
 const PROVIDER = (process.env.AI_PROVIDER || 'gemini').toLowerCase();
 const API_KEY = process.env.AI_API_KEY || process.env.GEMINI_API_KEY || process.env.GROK_API_KEY || '';
 
-const SYSTEM_PROMPT = (topicTitle, context) => `Sen "Biometod AI" ta'lim platformasining biologiya bo'yicha yordamchisisan.
-Faqat o'zbek tilida, sodda va tushunarli javob ber. Javoblaring biologiya/zoologiya fani doirasida bo'lsin.
-${topicTitle ? `Hozirgi mavzu: "${topicTitle}".` : ''}
-${context ? `Mavzu bo'yicha ma'lumot:\n${context}` : ''}`;
+const SYSTEM_PROMPT = (topicTitle, context) => `Sen "Biometod AI" bilim beriw platformasınıń biologiya boyınsha járdemshisisen.
+Faqat qaraqalpaq tilinde, ápiwayı hám túsinikli juwap ber. Juwaplarıń biologiya/zoologiya páni sheńberinde bolsın.
+${topicTitle ? `Házirgi tema: "${topicTitle}".` : ''}
+${context ? `Tema boyınsha maǵlıwmat:\n${context}` : ''}`;
 
 // Mavzu matnidan qisqa kontekst yig'ish (nazariy materiallar)
 async function buildContext(topicId) {
@@ -64,7 +64,7 @@ async function callGemini(system, messages, modelOverride) {
     throw err;
   }
   const data = await res.json();
-  return data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || 'Javob olinmadi.';
+  return data?.candidates?.[0]?.content?.parts?.map(p => p.text).join('') || 'Juwap alınbadı.';
 }
 
 // Gemini vaqtincha band bo'lsa (503) qisqa pauza bilan qayta uriniladi,
@@ -103,13 +103,13 @@ async function callGrok(system, messages) {
     throw err;
   }
   const data = await res.json();
-  return data?.choices?.[0]?.message?.content || 'Javob olinmadi.';
+  return data?.choices?.[0]?.message?.content || 'Juwap alınbadı.';
 }
 
 router.post('/chat', authenticate, aiLimiter, async (req, res) => {
   const { topicId, messages } = req.body;
   if (!Array.isArray(messages) || messages.length === 0) {
-    return res.status(400).json({ message: 'Xabar bo\'sh' });
+    return res.status(400).json({ message: 'Xabar bos' });
   }
   // Faqat kerakli maydonlar, uzunlik cheklovi bilan
   const clean = messages
@@ -122,8 +122,8 @@ router.post('/chat', authenticate, aiLimiter, async (req, res) => {
     return res.json({
       configured: false,
       reply:
-        "AI Yordamchi hozircha ulanmagan. Administrator bepul AI API kalitini (Gemini yoki Grok) " +
-        "sozlagach, bu yerda mavzu bo'yicha savol-javob qilishingiz mumkin bo'ladi.",
+        "AI Járdemshi házirshe ulanbaǵan. Administrator biypul AI API kiltin (Gemini yamasa Grok) " +
+        "sozlaǵannan soń, bul jerde tema boyınsha soraw-juwap etiwińiz múmkin boladı.",
     });
   }
 
@@ -138,18 +138,18 @@ router.post('/chat', authenticate, aiLimiter, async (req, res) => {
     console.error('AI error:', e.message);
     // Kvota/limit xatolari foydalanuvchiga tushunarli qilib qaytariladi
     if (e.status === 429) {
-      return res.status(429).json({ message: "AI kvotasi vaqtincha tugadi (bepul limit). Bir daqiqadan so'ng qayta urinib ko'ring." });
+      return res.status(429).json({ message: "AI kvotası waqıtsha tawısıldı (biypul limit). Bir minuttan soń qaytadan urınıp kórıń." });
     }
     if (e.status === 401 || e.status === 403) {
-      return res.status(502).json({ message: 'AI API kaliti noto\'g\'ri yoki ruxsat yo\'q. Administrator kalitni tekshirsin.' });
+      return res.status(502).json({ message: 'AI API kilti qáte yamasa ruxsat joq. Administrator kilti tekshersin.' });
     }
     if (e.status === 404) {
-      return res.status(502).json({ message: 'AI modeli topilmadi. Administrator AI_MODEL sozlamasini tekshirsin.' });
+      return res.status(502).json({ message: 'AI modeli tabılmadı. Administrator AI_MODEL sozlamasın tekserip kórsin.' });
     }
     if (e.status === 503) {
-      return res.status(503).json({ message: "AI hozir juda band (Google tomonida). Bir-ikki daqiqadan so'ng qayta urinib ko'ring." });
+      return res.status(503).json({ message: "AI házir júda bánt (Google tárepinde). Bir-eki minuttan soń qaytadan urınıp kórıń." });
     }
-    res.status(502).json({ message: "AI yordamchidan javob olishda xatolik. Birozdan so'ng qayta urinib ko'ring." });
+    res.status(502).json({ message: "AI járdemshiden juwap alıwda qátelik. Azǵantaydan soń qaytadan urınıp kórıń." });
   }
 });
 

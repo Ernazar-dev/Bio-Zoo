@@ -42,8 +42,8 @@ router.get('/topic/:topicId', async (req, res) => {
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, fileUrl, fileType, questionCount, timeLimit, answerKey } = req.body;
-  if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
-  if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Javoblar kaliti formati noto\'g\'ri' });
+  if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Juwaplar gilti formatı qáte' });
   try {
     const quiz = await prisma.quiz.create({
       data: { topicId, fileUrl, fileType, questionCount, timeLimit, answerKey },
@@ -51,7 +51,7 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
     res.status(201).json(quiz);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
@@ -74,14 +74,14 @@ router.get('/:id/results', authenticate, adminOnly, async (req, res) => {
     res.json(results);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { fileUrl, fileType, questionCount, timeLimit, answerKey } = req.body;
-  if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
-  if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Javoblar kaliti formati noto\'g\'ri' });
+  if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Juwaplar gilti formatı qáte' });
   try {
     const quiz = await prisma.quiz.update({
       where: { id: req.params.id },
@@ -90,33 +90,33 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(quiz);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.delete('/:id', authenticate, adminOnly, async (req, res) => {
   await prisma.quiz.delete({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  res.json({ message: 'Óshirildi' });
 });
 
 // Student submits quiz answer
 router.post('/:id/answer', authenticate, async (req, res) => {
   const { answers } = req.body; // e.g. {"1": "A", "2": "B", ...}
   const userId = req.user.userId;
-  if (!userId) return res.status(403).json({ message: 'Faqat studentlar test topshira oladi' });
+  if (!userId) return res.status(403).json({ message: 'Tek studentler test tapsıra aladı' });
   if (!answers || typeof answers !== 'object' || Array.isArray(answers))
-    return res.status(400).json({ message: 'Javoblar yuborilmadi' });
+    return res.status(400).json({ message: 'Juwaplar jiberilmedi' });
   // Javoblar formati qattiq tekshiriladi: kalit — savol raqami, qiymat — A-D harfi
   const entries = Object.entries(answers);
   if (entries.length > 500)
-    return res.status(400).json({ message: 'Javoblar formati noto\'g\'ri' });
+    return res.status(400).json({ message: 'Juwaplar formatı qáte' });
   for (const [key, value] of entries) {
     if (!/^\d{1,3}$/.test(key) || !/^[A-D]$/.test(String(value)))
-      return res.status(400).json({ message: 'Javoblar formati noto\'g\'ri' });
+      return res.status(400).json({ message: 'Juwaplar formatı qáte' });
   }
 
   const quiz = await prisma.quiz.findUnique({ where: { id: req.params.id } });
-  if (!quiz) return res.status(404).json({ message: 'Topilmadi' });
+  if (!quiz) return res.status(404).json({ message: 'Tabılmadı' });
 
   const answerKey = quiz.answerKey || {}; // e.g. {"1": "A", "2": "B", ...}
   const totalCount = quiz.questionCount || 0;

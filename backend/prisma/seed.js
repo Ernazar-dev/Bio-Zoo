@@ -5,24 +5,24 @@ const prisma = require('../src/utils/prisma');
 // not in the users table — nothing to seed here.
 
 async function main() {
-  const umurtqasizlar = await prisma.category.upsert({
-    where: { slug: 'umurtqasizlar' },
+  const omortqasizlar = await prisma.category.upsert({
+    where: { slug: 'omortqasizlar' },
     update: {},
     create: {
-      name: 'Umurtqasizlar',
-      slug: 'umurtqasizlar',
-      description: 'Umurtqasi bo\'lmagan hayvonlar dunyosi',
+      name: 'Omortqasızlar',
+      slug: 'omortqasizlar',
+      description: 'Omortqası bolmaǵan haywanlar dúnyası',
       order: 1,
     },
   });
 
-  const umurtqalilar = await prisma.category.upsert({
-    where: { slug: 'umurtqalilar' },
+  const omortqalilar = await prisma.category.upsert({
+    where: { slug: 'omortqalilar' },
     update: {},
     create: {
-      name: 'Umurtqalilar',
-      slug: 'umurtqalilar',
-      description: 'Umurtqali hayvonlar dunyosi',
+      name: 'Omortqalılar',
+      slug: 'omortqalilar',
+      description: 'Omortqalı haywanlar dúnyası',
       order: 2,
     },
   });
@@ -30,16 +30,16 @@ async function main() {
   await prisma.topic.createMany({
     skipDuplicates: true,
     data: [
-      { categoryId: umurtqasizlar.id, title: 'Kletka', description: 'Tirik organizm asosiy birligi', has3DModel: true, order: 1 },
-      { categoryId: umurtqasizlar.id, title: 'Hasharotlar', description: 'Hasharotlar sinfi', order: 2 },
-      { categoryId: umurtqasizlar.id, title: 'Mollyuskalar', description: 'Mollyuskalar tipi', order: 3 },
-      { categoryId: umurtqalilar.id, title: 'Baliqlar', description: 'Baliqlar sinfi', order: 1 },
-      { categoryId: umurtqalilar.id, title: 'Sudralib yuruvchilar', description: 'Reptiliyalar sinfi', order: 2 },
-      { categoryId: umurtqalilar.id, title: 'Sut emizuvchilar', description: 'Mammaliyalar sinfi', order: 3 },
+      { categoryId: omortqasizlar.id, title: 'Kletka', description: 'Tiri organizm tiykarǵı birligi', has3DModel: true, order: 1 },
+      { categoryId: omortqasizlar.id, title: 'Qurt-qumırsqalar', description: 'Qurt-qumırsqalar klası', order: 2 },
+      { categoryId: omortqasizlar.id, title: 'Mollyuskalar', description: 'Mollyuskalar tipi', order: 3 },
+      { categoryId: omortqalilar.id, title: 'Balıqlar', description: 'Balıqlar klası', order: 1 },
+      { categoryId: omortqalilar.id, title: 'Súyrelip júriwshiler', description: 'Reptiliyalar klası', order: 2 },
+      { categoryId: omortqalilar.id, title: 'Sút emiziwshiler', description: 'Mammaliyalar klası', order: 3 },
     ],
   });
 
-  console.log('Seed muvaffaqiyatli yakunlandi!');
+  console.log('Seed tabıslı juwmaqlandı!');
 }
 
 main().finally(() => prisma.$disconnect());

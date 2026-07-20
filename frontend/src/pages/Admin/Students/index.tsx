@@ -104,7 +104,7 @@ const AdminStudents: React.FC = () => {
       defaultSortOrder: 'descend' as any,
     },
     {
-      title: "Ro'yxatdan o'tgan", dataIndex: 'createdAt', key: 'createdAt', width: 170,
+      title: "Dizimnen ótken", dataIndex: 'createdAt', key: 'createdAt', width: 170,
       render: (d: string) => new Date(d).toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' }),
       sorter: (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     },
@@ -113,11 +113,11 @@ const AdminStudents: React.FC = () => {
   return (
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 4, padding: 24 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 12, marginBottom: 20 }}>
-        <Title level={3} style={{ margin: 0 }}>Studentlar</Title>
+        <Title level={3} style={{ margin: 0 }}>Studentler</Title>
         <Input
           allowClear
           prefix={<SearchOutlined style={{ color: 'var(--muted)' }} />}
-          placeholder="Ism yoki login bo'yicha qidirish"
+          placeholder="Atı yamasa login boyınsha qidirıw"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           style={{ width: 280 }}
@@ -126,13 +126,13 @@ const AdminStudents: React.FC = () => {
 
       <Row gutter={[16, 16]} style={{ marginBottom: 20 }}>
         <Col xs={24} sm={8}>
-          <StatCard icon={<TeamOutlined />} label="Jami studentlar" value={students.length} />
+          <StatCard icon={<TeamOutlined />} label="Jámi studentler" value={students.length} />
         </Col>
         <Col xs={24} sm={8}>
-          <StatCard icon={<StarOutlined />} label="Jami to'plangan ball" value={totalPoints} />
+          <StatCard icon={<StarOutlined />} label="Jámi toplanǵan ball" value={totalPoints} />
         </Col>
         <Col xs={24} sm={8}>
-          <StatCard icon={<RiseOutlined />} label="Oxirgi 30 kunda qo'shilgan" value={last30days} />
+          <StatCard icon={<RiseOutlined />} label="Sońǵı 30 kúnde qosılǵan" value={last30days} />
         </Col>
       </Row>
 
@@ -144,9 +144,9 @@ const AdminStudents: React.FC = () => {
         pagination={{
           pageSize: 10,
           showSizeChanger: false,
-          showTotal: (total) => `Jami: ${total} ta student`,
+          showTotal: (total) => `Jámi: ${total} student`,
         }}
-        locale={{ emptyText: search ? 'Qidiruv bo\'yicha student topilmadi' : 'Hozircha studentlar yo\'q' }}
+        locale={{ emptyText: search ? 'Qidirıw boyınsha student tabılmadı' : 'Házirshe studentler joq' }}
       />
     </div>
   );

@@ -12,8 +12,8 @@ import { Leaf, LeafOutline } from '../Decor/Leaf';
 const { Header, Content } = Layout;
 
 const navItems = [
-  { key: '/', label: 'Bosh sahifa' },
-  { key: '/categories', label: "Bo'limlar" },
+  { key: '/', label: 'Bas bet' },
+  { key: '/categories', label: "Bólimler" },
   { key: '/leaderboard', label: 'Reyting' },
 ];
 
@@ -108,7 +108,7 @@ const ClientLayout: React.FC = () => {
             type="text"
             shape="circle"
             onClick={toggle}
-            aria-label={mode === 'light' ? 'Tungi rejim' : 'Kunduzgi rejim'}
+            aria-label={mode === 'light' ? 'Túngi rejim' : 'Kúndizgi rejim'}
             icon={mode === 'light' ? <MoonOutlined style={{ fontSize: 17 }} /> : <SunOutlined style={{ fontSize: 17, color: '#f6b93b' }} />}
           />
           {user ? (
@@ -136,12 +136,12 @@ const ClientLayout: React.FC = () => {
               >
                 {user.name}
               </Link>
-              <Button className="bz-user-desktop" type="text" size="small" icon={<LogoutOutlined />} onClick={handleLogout} aria-label="Chiqish" />
+              <Button className="bz-user-desktop" type="text" size="small" icon={<LogoutOutlined />} onClick={handleLogout} aria-label="Shıgıw" />
             </>
           ) : (
             <>
-              <Button className="bz-user-desktop" type="text" onClick={() => navigate('/login')}>Kirish</Button>
-              <Button className="bz-user-desktop" type="primary" onClick={() => navigate('/register')}>Ro'yxatdan o'tish</Button>
+              <Button className="bz-user-desktop" type="text" onClick={() => navigate('/login')}>Kiriw</Button>
+              <Button className="bz-user-desktop" type="primary" onClick={() => navigate('/register')}>Dizimnen ótiw</Button>
             </>
           )}
           {/* Mobil menyu tugmasi — faqat tor ekranlarda ko'rinadi */}
@@ -204,16 +204,16 @@ const ClientLayout: React.FC = () => {
                 </div>
               </Link>
               <Button block icon={<LogoutOutlined />} onClick={() => { setMenuOpen(false); handleLogout(); }}>
-                Chiqish
+                Shıgıw
               </Button>
             </>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
               <Button type="primary" block size="large" onClick={() => { setMenuOpen(false); navigate('/register'); }}>
-                Ro'yxatdan o'tish
+                Dizimnen ótiw
               </Button>
               <Button block size="large" onClick={() => { setMenuOpen(false); navigate('/login'); }}>
-                Kirish
+                Kiriw
               </Button>
             </div>
           )}
@@ -256,34 +256,34 @@ const ClientLayout: React.FC = () => {
               <div>
                 <Wordmark size={16} light />
                 <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: 13, lineHeight: 1.7, marginTop: 12, maxWidth: 280 }}>
-                  Biometod AI — biologiya fanlarini 3D modellar, interaktiv
-                  testlar, AI yordamchi va video darsliklar orqali o'rganish
-                  platformasi.
+                  Biometod AI — biologiya pánlerin 3D modeller, interaktiv
+                  testler, AI járdemshi hám video sabaqlıqlar arqalı úyreniw
+                  platforması.
                 </p>
               </div>
 
               <div>
-                <span className="eyebrow" style={{ color: '#8fd0a8' }}>Sahifalar</span>
+                <span className="eyebrow" style={{ color: '#8fd0a8' }}>Betler</span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 16 }}>
-                  <Link to="/" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, textDecoration: 'none' }}>Bosh sahifa</Link>
-                  <Link to="/categories" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, textDecoration: 'none' }}>Bo'limlar</Link>
+                  <Link to="/" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, textDecoration: 'none' }}>Bas bet</Link>
+                  <Link to="/categories" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, textDecoration: 'none' }}>Bólimler</Link>
                   <Link to="/leaderboard" style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13, textDecoration: 'none' }}>Reyting</Link>
                 </div>
               </div>
 
               <div>
-                <span className="eyebrow" style={{ color: '#8fd0a8' }}>Bo'limlar</span>
+                <span className="eyebrow" style={{ color: '#8fd0a8' }}>Bólimler</span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 16 }}>
-                  <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>Umurtqasizlar</span>
-                  <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>Umurtqalilar</span>
+                  <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>Omirtqasızlar</span>
+                  <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>Omirtqalılar</span>
                 </div>
               </div>
 
               <div>
-                <span className="eyebrow" style={{ color: '#8fd0a8' }}>Aloqa</span>
+                <span className="eyebrow" style={{ color: '#8fd0a8' }}>Baylanıs</span>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 16 }}>
                   <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>info@biometod.ai</span>
-                  <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>Toshkent, O'zbekiston</span>
+                  <span style={{ color: 'rgba(255,255,255,0.65)', fontSize: 13 }}>Toshkent, Ózbekstan</span>
                 </div>
               </div>
             </div>
@@ -301,8 +301,8 @@ const ClientLayout: React.FC = () => {
                 color: 'rgba(255,255,255,0.45)',
               }}
             >
-              <span>© {new Date().getFullYear()} Biometod AI — Barcha huquqlar himoyalangan</span>
-              <span>Ta'lim maqsadida yaratilgan platforma</span>
+              <span>© {new Date().getFullYear()} Biometod AI — Barlıq huquqlar qorgalgan</span>
+              <span>Bilim beriw maqsetinde jaratılgan platforma</span>
             </div>
           </div>
         </footer>

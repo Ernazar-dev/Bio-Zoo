@@ -27,7 +27,7 @@ const Model3DViewer: React.FC<Props> = ({ url, height = 400 }) => (
       </Suspense>
     </Canvas>
     <div style={{ textAlign: 'center', padding: '8px 0', background: 'rgba(0,0,0,0.5)' }}>
-      <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>🖱️ Sichqoncha bilan aylantiring • Scroll — zoom</Text>
+      <Text style={{ color: 'rgba(255,255,255,0.5)', fontSize: 12 }}>🖱️ Sıshqanşa menen aylandırıń • Scroll — zoom</Text>
     </div>
   </div>
 );

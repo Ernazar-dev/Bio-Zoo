@@ -21,13 +21,13 @@ const AdminTopics: React.FC = () => {
 
   const save = useMutation({
     mutationFn: (values: any) => editing ? updateTopic(editing.id, values) : createTopic(values),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['topics-all'] }); setOpen(false); msg.success('Saqlandi'); },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato'),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['topics-all'] }); setOpen(false); msg.success('Saqlandı'); },
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik'),
   });
 
   const remove = useMutation({
     mutationFn: deleteTopic,
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['topics-all'] }); msg.success("O'chirildi"); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['topics-all'] }); msg.success("Óshirildi"); },
   });
 
   const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,8 +37,8 @@ const AdminTopics: React.FC = () => {
     try {
       const { url } = await uploadFile(file);
       form.setFieldValue('coverImage', url);
-      msg.success('Rasm yuklandi');
-    } catch { msg.error('Yuklashda xato'); }
+      msg.success('Súwret júklendi');
+    } catch { msg.error('Júklewde qátelik'); }
     finally { setUploading(false); }
   };
 
@@ -53,17 +53,17 @@ const AdminTopics: React.FC = () => {
       title: '', key: 'image', width: 60,
       render: (r: any) => <Avatar shape="square" size={40} src={r.coverImage} icon={<PictureOutlined />} />,
     },
-    { title: 'Mavzu', dataIndex: 'title', key: 'title' },
+    { title: 'Tema', dataIndex: 'title', key: 'title' },
     { title: 'Kategoriya', key: 'cat', render: (r: any) => categories.find((c: any) => c.id === r.categoryId)?.name ?? '-' },
     { title: '3D', key: '3d', render: (r: any) => r.has3DModel ? '✅' : '—' },
     { title: 'Materiallar', key: 'm', render: (r: any) => r._count?.materials ?? 0 },
-    { title: 'Testlar', key: 'q', render: (r: any) => r._count?.quizzes ?? 0 },
+    { title: 'Testler', key: 'q', render: (r: any) => r._count?.quizzes ?? 0 },
     {
       title: '', key: 'actions',
       render: (r: any) => (
         <Space>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
-          <Popconfirm title="O'chirilsinmi?" onConfirm={() => remove.mutate(r.id)} okText="Ha" cancelText="Yo'q">
+          <Popconfirm title="Óshirilsin be?" onConfirm={() => remove.mutate(r.id)} okText="Awa" cancelText="Yaq">
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
         </Space>
@@ -75,13 +75,13 @@ const AdminTopics: React.FC = () => {
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 4, padding: 24 }}>
       {ctxHolder}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-        <Title level={3} style={{ margin: 0 }}>Mavzular</Title>
-        <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()}>Qo'shish</Button>
+        <Title level={3} style={{ margin: 0 }}>Temalar</Title>
+        <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()}>Qosıw</Button>
       </div>
       <Table dataSource={topics} columns={cols} rowKey="id" loading={isLoading} />
 
-      <Modal title={editing ? 'Tahrirlash' : 'Yangi mavzu'} open={open} onCancel={() => setOpen(false)}
-        onOk={() => form.validateFields().then(v => save.mutate(v))} confirmLoading={save.isPending} okText="Saqlash" width={760}>
+      <Modal title={editing ? 'Redaktorlaw' : 'Jaña tema'} open={open} onCancel={() => setOpen(false)}
+        onOk={() => form.validateFields().then(v => save.mutate(v))} confirmLoading={save.isPending} okText="Saqlaw" width={760}>
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
@@ -90,31 +90,31 @@ const AdminTopics: React.FC = () => {
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="title" label="Mavzu nomi" rules={[{ required: true }]}><Input /></Form.Item>
+              <Form.Item name="title" label="Tema atı" rules={[{ required: true }]}><Input /></Form.Item>
             </Col>
           </Row>
-          <Form.Item name="description" label="Tavsif"><Input.TextArea rows={2} /></Form.Item>
+          <Form.Item name="description" label="Tariyp"><Input.TextArea rows={2} /></Form.Item>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
-              <Form.Item name="coverImage" label="Muqova rasmi URL">
-                <Input placeholder="URL kiriting yoki fayl yuklang" />
+              <Form.Item name="coverImage" label="Muqaba súwreti URL">
+                <Input placeholder="URL kiritiń yamasa fayl júkleń" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item label="Yoki rasm yuklang">
+              <Form.Item label="Yamasa súwret júkleń">
                 <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} />
-                {uploading && <span style={{ marginLeft: 8, color: '#1677ff' }}>Yuklanmoqda...</span>}
+                {uploading && <span style={{ marginLeft: 8, color: '#1677ff' }}>Júklenbekte...</span>}
               </Form.Item>
             </Col>
           </Row>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
-              <Form.Item name="has3DModel" label="3D Model bormi?" valuePropName="checked">
+              <Form.Item name="has3DModel" label="3D Model bar ma?" valuePropName="checked">
                 <Switch />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="order" label="Tartib raqami"><Input type="number" /></Form.Item>
+              <Form.Item name="order" label="Tártip sanı"><Input type="number" /></Form.Item>
             </Col>
           </Row>
         </Form>

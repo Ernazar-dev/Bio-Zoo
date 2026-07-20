@@ -13,7 +13,7 @@ router.get('/topic/:topicId', async (req, res) => {
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, title, url, description, platform, order } = req.body;
-  if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   try {
     const game = await prisma.gameLink.create({
       data: { topicId, title, url, description, platform, order: order || 0 },
@@ -21,13 +21,13 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
     res.status(201).json(game);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, url, description, platform, order } = req.body;
-  if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   try {
     const game = await prisma.gameLink.update({
       where: { id: req.params.id },
@@ -36,13 +36,13 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(game);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.delete('/:id', authenticate, adminOnly, async (req, res) => {
   await prisma.gameLink.delete({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  res.json({ message: 'Óshirildi' });
 });
 
 // Student video/darsni ochganini qayd etamiz — ball berilmaydi,

@@ -16,12 +16,12 @@ const { Title, Text } = Typography;
 
 const KIND_OPTIONS = [
   { value: 'MODEL_3D', label: '3D model (Sketchfab)' },
-  { value: 'SIMULATION', label: 'Simulyatsiya (PhET, JavaLab...)' },
+  { value: 'SIMULATION', label: 'Simulyaciya (PhET, JavaLab...)' },
   { value: 'VIRTUAL_LAB', label: 'Virtual laboratoriya' },
 ];
 const KIND_TAG: Record<string, { color: string; label: string }> = {
   MODEL_3D: { color: 'geekblue', label: '3D model' },
-  SIMULATION: { color: 'green', label: 'Simulyatsiya' },
+  SIMULATION: { color: 'green', label: 'Simulyaciya' },
   VIRTUAL_LAB: { color: 'purple', label: 'Virtual lab' },
 };
 
@@ -65,13 +65,13 @@ const AdminInteractives: React.FC = () => {
       };
       return editing ? updateInteractive(editing.id, payload) : createInteractive(payload);
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['interactives'] }); setOpen(false); msg.success('Saqlandi'); },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato'),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['interactives'] }); setOpen(false); msg.success('Saqlandı'); },
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik'),
   });
 
   const remove = useMutation({
     mutationFn: deleteInteractive,
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['interactives'] }); msg.success("O'chirildi"); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['interactives'] }); msg.success("Óshirildi"); },
   });
 
   const openModal = (record?: Interactive) => {
@@ -89,21 +89,21 @@ const AdminInteractives: React.FC = () => {
 
   const cols = [
     {
-      title: 'Turi', dataIndex: 'kind', key: 'kind', width: 130,
+      title: 'Túri', dataIndex: 'kind', key: 'kind', width: 130,
       render: (v: string) => <Tag color={KIND_TAG[v]?.color}>{KIND_TAG[v]?.label || v}</Tag>,
     },
-    { title: 'Sarlavha', dataIndex: 'title', key: 'title' },
+    { title: 'Sarlawha', dataIndex: 'title', key: 'title' },
     {
-      title: 'Manba', dataIndex: 'embedUrl', key: 'embedUrl',
+      title: 'Deregi', dataIndex: 'embedUrl', key: 'embedUrl',
       render: (v: string) => { try { return new URL(v).hostname; } catch { return v; } },
     },
-    { title: 'Tartib', dataIndex: 'order', key: 'order', width: 80 },
+    { title: 'Tártip', dataIndex: 'order', key: 'order', width: 80 },
     {
       title: '', key: 'actions', width: 100,
       render: (r: Interactive) => (
         <Space>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
-          <Popconfirm title="O'chirilsinmi?" onConfirm={() => remove.mutate(r.id)} okText="Ha" cancelText="Yo'q">
+          <Popconfirm title="Óshirilsin be?" onConfirm={() => remove.mutate(r.id)} okText="Awa" cancelText="Yaq">
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
         </Space>
@@ -118,7 +118,7 @@ const AdminInteractives: React.FC = () => {
         <Title level={3} style={{ margin: 0 }}><ExperimentOutlined /> Interaktiv resurslar</Title>
         <Space>
           <Select
-            placeholder="Mavzu tanlang"
+            placeholder="Tema tañlań"
             style={{ width: 280 }}
             value={selectedTopic || undefined}
             onChange={setSelectedTopic}
@@ -127,7 +127,7 @@ const AdminInteractives: React.FC = () => {
             optionFilterProp="label"
           />
           <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>
-            Qo'shish
+            Qosıw
           </Button>
         </Space>
       </div>
@@ -136,43 +136,43 @@ const AdminInteractives: React.FC = () => {
         type="info"
         showIcon
         style={{ marginBottom: 16 }}
-        message="Tekin manbalar"
+        message="Biypul derekler"
         description={
           <span>
-            3D modellar: <b>sketchfab.com</b> (Embed tugmasi → kodni nusxalang) · Simulyatsiyalar: <b>phet.colorado.edu</b>, <b>javalab.org</b>, <b>biologysimulations.com</b> — sahifa havolasini yoki embed kodini shu yerga joylang.
+            3D modeller: <b>sketchfab.com</b> (Embed tugmasi → kodni nusxalang) · Simulyaciyalar: <b>phet.colorado.edu</b>, <b>javalab.org</b>, <b>biologysimulations.com</b> — bet siltewin yamasa embed kodın usı jerge qoyıń.
           </span>
         }
       />
 
       {selectedTopic
         ? <Table dataSource={items} columns={cols} rowKey="id" loading={isLoading} />
-        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Mavzu tanlang</div>
+        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Tema tañlań</div>
       }
 
       <Modal
-        title={editing ? 'Interaktiv resursni tahrirlash' : 'Yangi interaktiv resurs'}
+        title={editing ? 'Interaktiv resurstı redaktorlaw' : 'Jaña interaktiv resurs'}
         open={open}
         onCancel={() => setOpen(false)}
         onOk={() => form.validateFields().then(v => save.mutate(v))}
         confirmLoading={save.isPending}
-        okText="Saqlash"
+        okText="Saqlaw"
         width={640}
       >
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
-          <Form.Item name="topicId" label="Mavzu" rules={[{ required: true, message: 'Mavzuni tanlang' }]}>
+          <Form.Item name="topicId" label="Tema" rules={[{ required: true, message: 'Temanı tañlań' }]}>
             <Select options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" />
           </Form.Item>
-          <Form.Item name="kind" label="Qaysi bo'limda chiqsin?" rules={[{ required: true }]}>
+          <Form.Item name="kind" label="Qaysı bólimde shıqsın?" rules={[{ required: true }]}>
             <Select options={KIND_OPTIONS} />
           </Form.Item>
-          <Form.Item name="title" label="Sarlavha" rules={[{ required: true, message: 'Sarlavha kiriting' }]}>
-            <Input placeholder="Masalan: Eukariot hujayra — 3D model" />
+          <Form.Item name="title" label="Sarlawha" rules={[{ required: true, message: 'Sarlawha kiritiń' }]}>
+            <Input placeholder="Mısalı: Eukariot kletka — 3D model" />
           </Form.Item>
           <Form.Item
             name="embedRaw"
-            label="Embed kod yoki havola"
-            rules={[{ required: true, message: 'Embed kod yoki havolani joylang' }]}
-            extra="Sketchfab'dan to'liq <iframe> kodini yoki model sahifasi havolasini joylasangiz bo'ladi — kerakli qismini o'zim ajratib olaman."
+            label="Embed kod yamasa siltew"
+            rules={[{ required: true, message: 'Embed kod yamasa siltewdi qoyıń' }]}
+            extra="Sketchfab'dan tolıq <iframe> kodın yamasa model betiniń siltewin qoysańız boladı — kerekli bólimin ózim ajıratıp alaman."
           >
             <Input.TextArea
               autoSize={{ minRows: 3, maxRows: 6 }}
@@ -199,16 +199,16 @@ const AdminInteractives: React.FC = () => {
                 type="warning"
                 showIcon
                 style={{ marginBottom: 16 }}
-                message="Havola tanilmadi yoki bu domenga ruxsat yo'q"
-                description={`Ruxsat etilgan saytlar: ${allowedHosts.join(', ')}`}
+                message="Siltew tabılmadı yamasa bul domenge ruxsat joq"
+                description={`Ruxsat etilgen saytlar: ${allowedHosts.join(', ')}`}
               />
             )
           )}
 
-          <Form.Item name="description" label="Qisqa izoh (ixtiyoriy)">
-            <Input placeholder="Talabaga ko'rsatma: nimaga e'tibor bersin" />
+          <Form.Item name="description" label="Qısqasha túsindirme (qálewli)">
+            <Input placeholder="Studentke kórsetpe: nege itibar bersin" />
           </Form.Item>
-          <Form.Item name="order" label="Tartib">
+          <Form.Item name="order" label="Tártip">
             <InputNumber min={0} style={{ width: 120 }} />
           </Form.Item>
         </Form>

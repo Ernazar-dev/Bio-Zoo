@@ -29,13 +29,13 @@ router.get('/:id', async (req, res) => {
       interactives: { orderBy: { order: 'asc' } },
     },
   });
-  if (!topic) return res.status(404).json({ message: 'Topilmadi' });
+  if (!topic) return res.status(404).json({ message: 'Tabılmadı' });
   res.json(topic);
 });
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { categoryId, title, description, coverImage, has3DModel, order } = req.body;
-  if (!isSafeUrl(coverImage)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(coverImage)) return res.status(400).json({ message: 'URL tek ǵana http(s) bolıwı múmkin' });
   try {
     const topic = await prisma.topic.create({
       data: { categoryId, title, description, coverImage, has3DModel: has3DModel || false, order: order || 0 },
@@ -43,13 +43,13 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
     res.status(201).json(topic);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Maǵlıwmatlar nadurıs' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, description, coverImage, has3DModel, order, categoryId } = req.body;
-  if (!isSafeUrl(coverImage)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(coverImage)) return res.status(400).json({ message: 'URL tek ǵana http(s) bolıwı múmkin' });
   try {
     const topic = await prisma.topic.update({
       where: { id: req.params.id },
@@ -58,13 +58,13 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(topic);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Maǵlıwmatlar nadurıs' });
   }
 });
 
 router.delete('/:id', authenticate, adminOnly, async (req, res) => {
   await prisma.topic.delete({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  res.json({ message: 'Óshirildi' });
 });
 
 module.exports = router;

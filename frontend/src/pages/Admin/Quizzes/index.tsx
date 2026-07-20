@@ -47,16 +47,16 @@ const AdminQuizzes: React.FC = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['quizzes'] });
       setOpen(false);
-      msg.success('Saqlandi');
+      msg.success('Saqlandı');
     },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato yuz berdi'),
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik júz berdi'),
   });
 
   const remove = useMutation({
     mutationFn: deleteQuiz,
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['quizzes'] });
-      msg.success("O'chirildi");
+      msg.success("Óshirildi");
     },
   });
 
@@ -67,9 +67,9 @@ const AdminQuizzes: React.FC = () => {
       form.setFieldValue('fileUrl', url);
       const ext = file.name.split('.').pop()?.toLowerCase() || '';
       form.setFieldValue('fileType', ext);
-      msg.success('Fayl yuklandi');
+      msg.success('Fayl júklendi');
     } catch {
-      msg.error('Fayl yuklashda xato');
+      msg.error('Fayl júklewde qátelik');
     } finally {
       setUploading(false);
     }
@@ -109,7 +109,7 @@ const AdminQuizzes: React.FC = () => {
       const count = values.questionCount;
       const missing = Array.from({ length: count }, (_, i) => i + 1).filter(n => !answers[String(n)]);
       if (missing.length > 0) {
-        msg.error(`Quyidagi savollarning javoblari belgilanmagan: ${missing.join(', ')}`);
+        msg.error(`Tómendegi sorawlardıń juwapları belgilengen joq: ${missing.join(', ')}`);
         return;
       }
       save.mutate(values);
@@ -124,29 +124,29 @@ const AdminQuizzes: React.FC = () => {
       render: (_: any, __: any, index: number) => index + 1,
     },
     {
-      title: 'Test Fayli',
+      title: 'Test Faylı',
       key: 'file',
       render: (r: any) => (
         <Space>
           <FileTextOutlined style={{ color: '#1890ff' }} />
           <a href={r.fileUrl} target="_blank" rel="noreferrer" style={{ fontWeight: 500 }}>
-            Faylni ochish ({r.fileType?.toUpperCase()})
+            Fayldı ashıw ({r.fileType?.toUpperCase()})
           </a>
         </Space>
       ),
     },
-    { title: 'Savollar', dataIndex: 'questionCount', key: 'questionCount', render: (q: number) => `${q} ta` },
-    { title: 'Vaqt', dataIndex: 'timeLimit', key: 'timeLimit', render: (t: number) => t > 0 ? `${t} daqiqa` : 'Cheklanmagan' },
+    { title: 'Sorawlar', dataIndex: 'questionCount', key: 'questionCount', render: (q: number) => `${q} dana` },
+    { title: 'Waqıt', dataIndex: 'timeLimit', key: 'timeLimit', render: (t: number) => t > 0 ? `${t} minut` : 'Sheklenbegen' },
     {
-      title: 'Amallar',
+      title: 'Háreketler',
       key: 'actions',
       render: (r: any) => (
         <Space>
           <Button icon={<TeamOutlined />} size="small" type="primary" ghost onClick={() => openResultsModal(r)}>
-            Natijalar
+            Nátijeler
           </Button>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
-          <Popconfirm title="Test o'chirilsinmi?" onConfirm={() => remove.mutate(r.id)} okText="Ha" cancelText="Yo'q">
+          <Popconfirm title="Test óshirilsin be?" onConfirm={() => remove.mutate(r.id)} okText="Awa" cancelText="Yaq">
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
         </Space>
@@ -155,10 +155,10 @@ const AdminQuizzes: React.FC = () => {
   ];
 
   const resultCols = [
-    { title: 'F.I.Sh (Ism)', dataIndex: ['user', 'name'], key: 'userName' },
+    { title: 'T.I.A (Atı)', dataIndex: ['user', 'name'], key: 'userName' },
     { title: 'Login', dataIndex: ['user', 'login'], key: 'login' },
     {
-      title: 'Natija (%)',
+      title: 'Nátije (%)',
       dataIndex: 'score',
       key: 'score',
       render: (s: number) => (
@@ -168,7 +168,7 @@ const AdminQuizzes: React.FC = () => {
       )
     },
     {
-      title: 'To\'g\'ri javoblar',
+      title: 'Durıs juwaplar',
       key: 'correct',
       render: (r: any) => `${r.correctCount} / ${r.totalCount}`
     },
@@ -179,7 +179,7 @@ const AdminQuizzes: React.FC = () => {
       render: (p: number) => <Tag color="green">+{p} ball</Tag>
     },
     {
-      title: 'Topshirilgan vaqt',
+      title: 'Tapsırılǵan waqıt',
       dataIndex: 'createdAt',
       key: 'date',
       render: (d: string) => new Date(d).toLocaleString('uz-UZ')
@@ -191,10 +191,10 @@ const AdminQuizzes: React.FC = () => {
       {ctxHolder}
       
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 24, flexWrap: 'wrap', gap: 12, alignItems: 'center' }}>
-        <Title level={3} style={{ margin: 0 }}>Mavzu testlari boshqaruvi</Title>
+        <Title level={3} style={{ margin: 0 }}>Tema testlerin basqarıw</Title>
         <Space>
           <Select
-            placeholder="Mavzu tanlang"
+            placeholder="Tema tañlań"
             style={{ width: 300 }}
             value={selectedTopic || undefined}
             onChange={setSelectedTopic}
@@ -203,7 +203,7 @@ const AdminQuizzes: React.FC = () => {
             optionFilterProp="label"
           />
           <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>
-            Yangi test qo'shish
+            Jaña test qosıw
           </Button>
         </Space>
       </div>
@@ -211,7 +211,7 @@ const AdminQuizzes: React.FC = () => {
       {!selectedTopic ? (
         <div style={{ textAlign: 'center', padding: 80, color: '#999', background: '#fafafa', borderRadius: 12, border: '1px dashed #e8e8e8' }}>
           <InfoCircleOutlined style={{ fontSize: 32, marginBottom: 12, color: '#ccc' }} />
-          <div>Mavzuga oid testlarni boshqarish uchun yuqoridan mavzu tanlang.</div>
+          <div>Temaǵa tiyisli testlerdi basqarıw ushın joqarıdan tema tañlań.</div>
         </div>
       ) : (
         <Table dataSource={quizzes} columns={quizCols} rowKey="id" loading={isLoading} />
@@ -219,28 +219,28 @@ const AdminQuizzes: React.FC = () => {
 
       {/* Test yaratish/tahrirlash Modali */}
       <Modal
-        title={editing ? 'Test tahrirlash' : 'Yangi test qo\'shish'}
+        title={editing ? 'Testti redaktorlaw' : 'Jaña test qosıw'}
         open={open}
         onCancel={() => setOpen(false)}
         onOk={handleSubmit}
         confirmLoading={save.isPending}
-        okText="Saqlash"
+        okText="Saqlaw"
         width={900}
       >
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
-              <Form.Item name="topicId" label="Mavzu" rules={[{ required: true }]}>
+              <Form.Item name="topicId" label="Tema" rules={[{ required: true }]}>
                 <Select options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" disabled />
               </Form.Item>
             </Col>
             <Col xs={12} sm={6}>
-              <Form.Item name="questionCount" label="Savollar soni" rules={[{ required: true, message: 'Kiritish majburiy' }]}>
+              <Form.Item name="questionCount" label="Sorawlar sanı" rules={[{ required: true, message: 'Kiritiw májburiy' }]}>
                 <InputNumber min={1} max={100} style={{ width: '100%' }} />
               </Form.Item>
             </Col>
             <Col xs={12} sm={6}>
-              <Form.Item name="timeLimit" label="Vaqt (daqiqa, 0 - cheksiz)">
+              <Form.Item name="timeLimit" label="Waqıt (minut, 0 - sheksiz)">
                 <InputNumber min={0} max={300} style={{ width: '100%' }} />
               </Form.Item>
             </Col>
@@ -248,12 +248,12 @@ const AdminQuizzes: React.FC = () => {
 
           <Row gutter={16}>
             <Col xs={24} sm={16}>
-              <Form.Item name="fileUrl" label="Test fayli (Word yoki PDF) URL manzili" rules={[{ required: true, message: 'Fayl yuklash majburiy' }]}>
-                <Input placeholder="Fayl URL manzili yoki yuklang" />
+              <Form.Item name="fileUrl" label="Test faylı (Word yamasa PDF) URL manzili" rules={[{ required: true, message: 'Fayl júklew májburiy' }]}>
+                <Input placeholder="Fayl URL manzili yamasa júkleń" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={8}>
-              <Form.Item label="Test faylini yuklash">
+              <Form.Item label="Test faylın júklew">
                 <Upload
                   beforeUpload={(file) => {
                     handleUploadFile(file);
@@ -262,7 +262,7 @@ const AdminQuizzes: React.FC = () => {
                   showUploadList={false}
                   accept=".pdf,.doc,.docx"
                 >
-                  <Button icon={<UploadOutlined />} loading={uploading}>Fayl tanlash</Button>
+                  <Button icon={<UploadOutlined />} loading={uploading}>Fayl tañlaw</Button>
                 </Upload>
               </Form.Item>
             </Col>
@@ -272,7 +272,7 @@ const AdminQuizzes: React.FC = () => {
 
           {watchQuestionCount > 0 && (
             <div>
-              <Title level={5} style={{ marginBottom: 12 }}>To'g'ri javoblar kalitini belgilang:</Title>
+              <Title level={5} style={{ marginBottom: 12 }}>Durıs juwaplar kiltin belgileń:</Title>
               <div style={{
                 maxHeight: 'min(45vh, 420px)',
                 overflowY: 'auto',
@@ -312,7 +312,7 @@ const AdminQuizzes: React.FC = () => {
 
       {/* Natijalar Modali */}
       <Modal
-        title={resultsQuiz ? `"${topics.find((t: any) => t.id === resultsQuiz.topicId)?.title}" testi natijalari` : "Test natijalari"}
+        title={resultsQuiz ? `"${topics.find((t: any) => t.id === resultsQuiz.topicId)?.title}" testi nátijeleri` : "Test nátijeleri"}
         open={resultsOpen}
         onCancel={() => setResultsOpen(false)}
         footer={null}
@@ -325,7 +325,7 @@ const AdminQuizzes: React.FC = () => {
             rowKey="id" 
             loading={loadingResults} 
             pagination={{ pageSize: 10 }}
-            locale={{ emptyText: "Bu testni hali hech kim topshirmagan." }}
+            locale={{ emptyText: "Bul testti ele hesh kim tapsırǵan joq." }}
           />
         </div>
       </Modal>

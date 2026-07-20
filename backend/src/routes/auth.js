@@ -23,21 +23,21 @@ router.post('/register', async (req, res) => {
     const login = String(req.body.login ?? '').trim();
     const password = String(req.body.password ?? '');
     if (!name || !login || !password)
-      return res.status(400).json({ message: 'Barcha maydonlarni to\'ldiring' });
+      return res.status(400).json({ message: 'Barlıq maydanlardı toldırıń' });
     if (name.length > 64)
-      return res.status(400).json({ message: 'Ism 64 ta belgidan oshmasligi kerak' });
+      return res.status(400).json({ message: 'Atıńız 64 belgiden aspawı kerek' });
     if (!/^[a-zA-Z0-9_.@-]{3,32}$/.test(login))
-      return res.status(400).json({ message: 'Login 3-32 ta belgi: harf, raqam, _ . @ - bo\'lishi mumkin' });
+      return res.status(400).json({ message: 'Login 3-32 belgi: háripler, sanlar, _ . @ - bolıwı múmkin' });
     if (password.length < 6)
-      return res.status(400).json({ message: 'Parol kamida 6 ta belgidan iborat bo\'lishi kerak' });
+      return res.status(400).json({ message: 'Parol keminde 6 belgiden ibarat bolıwı kerek' });
     // bcrypt 72 baytdan keyin qirqadi; juda uzun parol hashlash orqali DoS oldini olamiz
     if (password.length > 72)
-      return res.status(400).json({ message: 'Parol 72 ta belgidan oshmasligi kerak' });
+      return res.status(400).json({ message: 'Parol 72 belgiden aspawı kerek' });
     if (safeEqual(login, process.env.ADMIN_LOGIN))
-      return res.status(400).json({ message: 'Bu login allaqachon mavjud' });
+      return res.status(400).json({ message: 'Bul login ámelde bar' });
 
     const exists = await prisma.user.findUnique({ where: { login } });
-    if (exists) return res.status(400).json({ message: 'Bu login allaqachon mavjud' });
+    if (exists) return res.status(400).json({ message: 'Bul login ámelde bar' });
 
     const hashed = await bcrypt.hash(password, 10);
     const user = await prisma.user.create({
@@ -59,7 +59,7 @@ router.post('/register', async (req, res) => {
       user: { id: user.id, name: user.name, login: user.login, role: user.role, points: 0 },
     });
   } catch (e) {
-    res.status(500).json({ message: 'Server xatosi' });
+    res.status(500).json({ message: 'Server qáteligi' });
   }
 });
 
@@ -72,9 +72,9 @@ router.post('/login', async (req, res) => {
     const login = typeof req.body.login === 'string' ? req.body.login.trim() : '';
     const password = typeof req.body.password === 'string' ? req.body.password : '';
     if (!login || !password)
-      return res.status(400).json({ message: 'Login va parolni kiriting' });
+      return res.status(400).json({ message: 'Login hám paroldi kiritiń' });
     if (login.length > 128 || password.length > 128)
-      return res.status(400).json({ message: 'Login yoki parol noto\'g\'ri' });
+      return res.status(400).json({ message: 'Login yamasa parol qáte' });
 
     if (safeEqual(login, process.env.ADMIN_LOGIN) && safeEqual(password, process.env.ADMIN_PASSWORD)) {
       const accessToken = jwt.sign({ role: 'ADMIN', admin: true }, process.env.JWT_ACCESS_SECRET, { expiresIn: '15m' });
@@ -88,7 +88,7 @@ router.post('/login', async (req, res) => {
 
     const user = await prisma.user.findUnique({ where: { login } });
     if (!user || !(await bcrypt.compare(password, user.password)))
-      return res.status(400).json({ message: 'Login yoki parol noto\'g\'ri' });
+      return res.status(400).json({ message: 'Login yamasa parol qáte' });
 
     // Ball faqat test natijasi uchun beriladi — kunlik kirish bonusi yo'q
 
@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
       user: { id: updated.id, name: updated.name, login: updated.login, role: updated.role, points: updated.points },
     });
   } catch (e) {
-    res.status(500).json({ message: 'Server xatosi' });
+    res.status(500).json({ message: 'Server qáteligi' });
   }
 });
 
@@ -112,7 +112,7 @@ router.post('/refresh', async (req, res) => {
   try {
     const { refreshToken } = req.body;
     if (!refreshToken || typeof refreshToken !== 'string')
-      return res.status(401).json({ message: 'Token kerak' });
+      return res.status(401).json({ message: 'Token kerek' });
 
     const payload = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
 
@@ -123,10 +123,10 @@ router.post('/refresh', async (req, res) => {
     }
 
     const stored = await prisma.refreshToken.findUnique({ where: { token: refreshToken } });
-    if (!stored || stored.expiresAt < new Date()) return res.status(401).json({ message: 'Token yaroqsiz' });
+    if (!stored || stored.expiresAt < new Date()) return res.status(401).json({ message: 'Token jaraqsız' });
 
     const user = await prisma.user.findUnique({ where: { id: payload.userId } });
-    if (!user) return res.status(401).json({ message: 'Token yaroqsiz' });
+    if (!user) return res.status(401).json({ message: 'Token jaraqsız' });
     const tokens = generateTokens(user.id, user.role);
 
     // Eski token darhol o'chirilmaydi — 60 soniyalik "grace" oynasi qoladi.
@@ -144,7 +144,7 @@ router.post('/refresh', async (req, res) => {
 
     res.json(tokens);
   } catch {
-    res.status(401).json({ message: 'Token yaroqsiz' });
+    res.status(401).json({ message: 'Token jaraqsız' });
   }
 });
 
@@ -153,7 +153,7 @@ router.post('/logout', async (req, res) => {
   const { refreshToken } = req.body;
   if (refreshToken && typeof refreshToken === 'string')
     await prisma.refreshToken.deleteMany({ where: { token: refreshToken } });
-  res.json({ message: 'Chiqildi' });
+  res.json({ message: 'Shıǵıldı' });
 });
 
 module.exports = router;

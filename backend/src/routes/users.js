@@ -33,7 +33,7 @@ router.get('/me', authenticate, async (req, res) => {
     where: { id: req.user.userId },
     select: { id: true, name: true, login: true, role: true, points: true, avatar: true, createdAt: true },
   });
-  if (!user) return res.status(404).json({ message: 'Topilmadi' });
+  if (!user) return res.status(404).json({ message: 'Tabılmadı' });
   res.json(user);
 });
 
@@ -101,7 +101,7 @@ router.get('/me/progress', authenticate, async (req, res) => {
 router.get('/me/rank', authenticate, async (req, res) => {
   if (!req.user.userId) return res.json({ rank: 0, total: 0 });
   const me = await prisma.user.findUnique({ where: { id: req.user.userId }, select: { points: true } });
-  if (!me) return res.status(404).json({ message: 'Topilmadi' });
+  if (!me) return res.status(404).json({ message: 'Tabılmadı' });
   const [higher, total] = await Promise.all([
     prisma.user.count({ where: { role: 'STUDENT', points: { gt: me.points } } }),
     prisma.user.count({ where: { role: 'STUDENT' } }),

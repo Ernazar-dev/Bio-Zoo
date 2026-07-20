@@ -41,13 +41,13 @@ const AdminInfographics: React.FC = () => {
       };
       return editing ? updateInfographic(editing.id, payload) : createInfographic(payload);
     },
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['infographics'] }); setOpen(false); msg.success('Saqlandi'); },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato'),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['infographics'] }); setOpen(false); msg.success('Saqlandı'); },
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik'),
   });
 
   const remove = useMutation({
     mutationFn: deleteInfographic,
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['infographics'] }); msg.success("O'chirildi"); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['infographics'] }); msg.success("Óshirildi"); },
   });
 
   const handleUpload = async (file: File) => {
@@ -55,8 +55,8 @@ const AdminInfographics: React.FC = () => {
     try {
       const { url } = await uploadFile(file);
       form.setFieldValue('imageUrl', url);
-      msg.success('Rasm yuklandi');
-    } catch { msg.error('Yuklashda xato'); }
+      msg.success('Súwret júklendi');
+    } catch { msg.error('Júklewde qátelik'); }
     finally { setUploading(false); }
   };
 
@@ -73,19 +73,19 @@ const AdminInfographics: React.FC = () => {
 
   const cols = [
     {
-      title: 'Rasm', key: 'image', width: 110,
+      title: 'Súwret', key: 'image', width: 110,
       render: (r: Infographic) => r.imageUrl
         ? <Image src={r.imageUrl} width={80} height={54} style={{ objectFit: 'cover', borderRadius: 6 }} />
         : <span style={{ color: '#999' }}>—</span>,
     },
-    { title: 'Sarlavha', dataIndex: 'title', key: 'title' },
-    { title: 'Tartib', dataIndex: 'order', key: 'order', width: 80 },
+    { title: 'Sarlawha', dataIndex: 'title', key: 'title' },
+    { title: 'Tártip', dataIndex: 'order', key: 'order', width: 80 },
     {
       title: '', key: 'actions', width: 100,
       render: (r: Infographic) => (
         <Space>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
-          <Popconfirm title="O'chirilsinmi?" onConfirm={() => remove.mutate(r.id)} okText="Ha" cancelText="Yo'q">
+          <Popconfirm title="Óshirilsin be?" onConfirm={() => remove.mutate(r.id)} okText="Awa" cancelText="Yaq">
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
         </Space>
@@ -100,7 +100,7 @@ const AdminInfographics: React.FC = () => {
         <Title level={3} style={{ margin: 0 }}>Infografikalar</Title>
         <Space>
           <Select
-            placeholder="Mavzu tanlang"
+            placeholder="Tema tañlań"
             style={{ width: 280 }}
             value={selectedTopic || undefined}
             onChange={setSelectedTopic}
@@ -109,36 +109,36 @@ const AdminInfographics: React.FC = () => {
             optionFilterProp="label"
           />
           <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>
-            Qo'shish
+            Qosıw
           </Button>
         </Space>
       </div>
 
       {selectedTopic
         ? <Table dataSource={items} columns={cols} rowKey="id" loading={isLoading} />
-        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Mavzu tanlang</div>
+        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Tema tañlań</div>
       }
 
       <Modal
-        title={editing ? 'Infografikani tahrirlash' : 'Yangi infografika'}
+        title={editing ? 'Infografikanı redaktorlaw' : 'Jaña infografika'}
         open={open}
         onCancel={() => setOpen(false)}
         onOk={() => form.validateFields().then(v => save.mutate(v))}
         confirmLoading={save.isPending}
-        okText="Saqlash"
+        okText="Saqlaw"
         width={520}
       >
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
-          <Form.Item name="topicId" label="Mavzu" rules={[{ required: true, message: 'Mavzuni tanlang' }]}>
+          <Form.Item name="topicId" label="Tema" rules={[{ required: true, message: 'Temanı tañlań' }]}>
             <Select options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" />
           </Form.Item>
-          <Form.Item name="title" label="Sarlavha" rules={[{ required: true, message: 'Sarlavha kiriting' }]}>
-            <Input placeholder="Masalan: Zoologiya — mental karta" />
+          <Form.Item name="title" label="Sarlawha" rules={[{ required: true, message: 'Sarlawha kiritiń' }]}>
+            <Input placeholder="Mısalı: Zoologiya — mental karta" />
           </Form.Item>
           <Form.Item
             name="imageUrl"
-            label="Infografika rasmi (mental karta)"
-            rules={[{ required: true, message: 'Rasm yuklang' }]}
+            label="Infografika súwreti (mental karta)"
+            rules={[{ required: true, message: 'Súwret júkleń' }]}
           >
             <Input hidden />
           </Form.Item>
@@ -148,7 +148,7 @@ const AdminInfographics: React.FC = () => {
               showUploadList={false}
               accept="image/*"
             >
-              <Button icon={<UploadOutlined />} loading={uploading}>Rasm tanlash</Button>
+              <Button icon={<UploadOutlined />} loading={uploading}>Súwret tañlaw</Button>
             </Upload>
             {watchImageUrl && (
               <div style={{ marginTop: 12 }}>
@@ -156,7 +156,7 @@ const AdminInfographics: React.FC = () => {
               </div>
             )}
           </div>
-          <Form.Item name="order" label="Tartib">
+          <Form.Item name="order" label="Tártip">
             <InputNumber min={0} style={{ width: 120 }} />
           </Form.Item>
         </Form>

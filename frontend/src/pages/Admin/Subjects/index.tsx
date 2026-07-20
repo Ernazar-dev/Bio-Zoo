@@ -24,8 +24,8 @@ const AdminSubjects: React.FC = () => {
     try {
       const { url } = await uploadFile(file);
       form.setFieldValue('imageUrl', url);
-      msg.success('Rasm yuklandi');
-    } catch { msg.error('Yuklashda xato'); }
+      msg.success('Súwret júklendi');
+    } catch { msg.error('Júklewde qátelik'); }
     finally { setUploading(false); }
   };
 
@@ -35,9 +35,9 @@ const AdminSubjects: React.FC = () => {
       qc.invalidateQueries({ queryKey: ['subjects'] });
       qc.invalidateQueries({ queryKey: ['categories'] });
       setOpen(false);
-      msg.success('Saqlandi');
+      msg.success('Saqlandı');
     },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato'),
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik'),
   });
 
   const remove = useMutation({
@@ -45,7 +45,7 @@ const AdminSubjects: React.FC = () => {
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['subjects'] });
       qc.invalidateQueries({ queryKey: ['categories'] });
-      msg.success("O'chirildi");
+      msg.success("Óshirildi");
     },
   });
 
@@ -60,20 +60,20 @@ const AdminSubjects: React.FC = () => {
       title: '', key: 'image', width: 60,
       render: (r: any) => <Avatar shape="square" size={40} src={r.imageUrl} icon={<PictureOutlined />} />,
     },
-    { title: 'Nomi', dataIndex: 'name', key: 'name' },
+    { title: 'Atı', dataIndex: 'name', key: 'name' },
     { title: 'Kategoriyalar', key: 'count', render: (r: any) => r._count?.categories ?? 0 },
-    { title: 'Tartib', dataIndex: 'order', key: 'order' },
+    { title: 'Tártip', dataIndex: 'order', key: 'order' },
     {
       title: '', key: 'actions',
       render: (r: any) => (
         <Space>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
           <Popconfirm
-            title="Fan o'chirilsinmi?"
-            description="Ichidagi kategoriyalar o'chmaydi, faqat fandan ajraladi."
+            title="Pán óshirilsin be?"
+            description="Ishindegi kategoriyalar óshirilmeydi, tek pánden ajratıladı."
             onConfirm={() => remove.mutate(r.id)}
-            okText="Ha"
-            cancelText="Yo'q"
+            okText="Awa"
+            cancelText="Yaq"
           >
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
@@ -86,25 +86,25 @@ const AdminSubjects: React.FC = () => {
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 4, padding: 24 }}>
       {ctxHolder}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20 }}>
-        <Title level={3} style={{ margin: 0 }}>Fanlar</Title>
-        <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()}>Qo'shish</Button>
+        <Title level={3} style={{ margin: 0 }}>Pánler</Title>
+        <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()}>Qosıw</Button>
       </div>
       <Table dataSource={data} columns={cols} rowKey="id" loading={isLoading} />
-
-      <Modal title={editing ? 'Tahrirlash' : "Yangi fan"} open={open} onCancel={() => setOpen(false)}
-        onOk={() => form.validateFields().then(v => save.mutate(v))} confirmLoading={save.isPending} okText="Saqlash">
+ 
+      <Modal title={editing ? 'Redaktorlaw' : "Jaña pán"} open={open} onCancel={() => setOpen(false)}
+        onOk={() => form.validateFields().then(v => save.mutate(v))} confirmLoading={save.isPending} okText="Saqlaw">
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
-          <Form.Item name="name" label="Nomi" rules={[{ required: true }]}><Input placeholder="Masalan: Zoologiya" /></Form.Item>
-          <Form.Item name="description" label="Tavsif"><Input.TextArea rows={2} /></Form.Item>
-          <Form.Item name="imageUrl" label="Fon rasmi URL">
-            <Input placeholder="URL kiriting yoki quyida fayl yuklang" />
+          <Form.Item name="name" label="Atı" rules={[{ required: true }]}><Input placeholder="Mısalı: Zoologiya" /></Form.Item>
+          <Form.Item name="description" label="Tariyp"><Input.TextArea rows={2} /></Form.Item>
+          <Form.Item name="imageUrl" label="Fon súwreti URL">
+            <Input placeholder="URL kiritiń yamasa tómende fayl júkleń" />
           </Form.Item>
           <div style={{ marginBottom: 16 }}>
-            <label style={{ fontSize: 12, color: '#666' }}>Yoki rasm yuklang: </label>
+            <label style={{ fontSize: 12, color: '#666' }}>Yamasa súwret júkleń: </label>
             <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} />
-            {uploading && <span style={{ marginLeft: 8, color: '#1677ff' }}>Yuklanmoqda...</span>}
+            {uploading && <span style={{ marginLeft: 8, color: '#1677ff' }}>Júklenbekte...</span>}
           </div>
-          <Form.Item name="order" label="Tartib raqami"><Input type="number" /></Form.Item>
+          <Form.Item name="order" label="Tártip sanı"><Input type="number" /></Form.Item>
         </Form>
       </Modal>
     </div>

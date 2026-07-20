@@ -43,7 +43,7 @@ const upload = multer({
 
 router.post('/', authenticate, adminOnly, upload.single('file'), async (req, res, next) => {
   try {
-    if (!req.file) return res.status(400).json({ message: 'Fayl yuklanmadi' });
+    if (!req.file) return res.status(400).json({ message: 'Fayl júklenbedi' });
 
     // originalname multipart'da latin1 bo'lib keladi — UTF-8 ga qaytaramiz.
     // Boshqaruv belgilari olib tashlanadi (header-injection oldini olish), uzunlik cheklanadi.

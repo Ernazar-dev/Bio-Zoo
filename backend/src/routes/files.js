@@ -9,7 +9,7 @@ const { authenticate, adminOnly } = require('../middleware/auth');
 router.get('/:id{/:name}', async (req, res, next) => {
   try {
     const file = await prisma.storedFile.findUnique({ where: { id: req.params.id } });
-    if (!file) return res.status(404).json({ message: 'Fayl topilmadi' });
+    if (!file) return res.status(404).json({ message: 'Fayl tabılmadı' });
 
     const data = Buffer.from(file.data);
     const total = data.length;
@@ -63,9 +63,9 @@ router.get('/:id{/:name}', async (req, res, next) => {
 router.delete('/:id', authenticate, adminOnly, async (req, res, next) => {
   try {
     await prisma.storedFile.delete({ where: { id: req.params.id } });
-    res.json({ message: "Fayl o'chirildi" });
+    res.json({ message: "Fayl óshirildi" });
   } catch (err) {
-    if (err.code === 'P2025') return res.status(404).json({ message: 'Fayl topilmadi' });
+    if (err.code === 'P2025') return res.status(404).json({ message: 'Fayl tabılmadı' });
     next(err);
   }
 });

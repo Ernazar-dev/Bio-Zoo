@@ -43,9 +43,9 @@ router.get('/allowed-hosts', (req, res) => res.json(ALLOWED_HOSTS));
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, kind, title, embedUrl, description, order } = req.body;
-  if (!topicId || !title || !embedUrl) return res.status(400).json({ message: 'Majburiy maydonlar to\'ldirilmagan' });
+  if (!topicId || !title || !embedUrl) return res.status(400).json({ message: 'Majburiy maydanlar toldırılmaǵan' });
   if (!isAllowedEmbedUrl(embedUrl)) {
-    return res.status(400).json({ message: 'Bu havolaga ruxsat yo\'q. Faqat: ' + ALLOWED_HOSTS.join(', ') });
+    return res.status(400).json({ message: 'Bul siltewge ruxsat joq. Tek: ' + ALLOWED_HOSTS.join(', ') });
   }
   try {
     const item = await prisma.interactive.create({
@@ -61,14 +61,14 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
     res.status(201).json(item);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { kind, title, embedUrl, description, order } = req.body;
   if (embedUrl !== undefined && !isAllowedEmbedUrl(embedUrl)) {
-    return res.status(400).json({ message: 'Bu havolaga ruxsat yo\'q. Faqat: ' + ALLOWED_HOSTS.join(', ') });
+    return res.status(400).json({ message: 'Bul siltewge ruxsat joq. Tek: ' + ALLOWED_HOSTS.join(', ') });
   }
   try {
     const item = await prisma.interactive.update({
@@ -84,13 +84,13 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(item);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.delete('/:id', authenticate, adminOnly, async (req, res) => {
   await prisma.interactive.delete({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  res.json({ message: 'Óshirildi' });
 });
 
 module.exports = router;

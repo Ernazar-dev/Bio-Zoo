@@ -48,7 +48,7 @@ const MiniQuiz: React.FC<{ quiz: NonNullable<InfographicBlock['quiz']> }> = ({ q
       </div>
       {answered && (
         <Text style={{ display: 'block', marginTop: 12, fontSize: 13.5, color: picked === quiz.correctIndex ? '#1b8a4e' : '#d64545' }}>
-          {picked === quiz.correctIndex ? "To'g'ri javob! 🎉" : "Noto'g'ri. To'g'ri javob belgilangan."}
+          {picked === quiz.correctIndex ? "Durıs juwap! 🎉" : "Qáte. Durıs juwap belgilengen."}
         </Text>
       )}
     </div>
@@ -70,7 +70,7 @@ const BlockAi: React.FC<{ topicId: string; blockLabel: string }> = ({ topicId, b
       const res = await askAi({ topicId, messages: [{ role: 'user', content: `[${blockLabel}] ${text}` }] });
       setAnswer(res.reply);
     } catch {
-      setAnswer("AI bilan bog'lanishда xatolik yuz berdi.");
+      setAnswer("AI menen baylanısıwda qátelik júz berdi.");
     } finally {
       setLoading(false);
     }
@@ -80,13 +80,13 @@ const BlockAi: React.FC<{ topicId: string; blockLabel: string }> = ({ topicId, b
     <div style={{ background: 'var(--bg)', border: '1px solid var(--line)', borderRadius: 12, padding: 16 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
         <RobotOutlined style={{ color: 'var(--accent-ink)' }} />
-        <Text strong style={{ color: 'var(--ink)' }}>AI'dan so'rash</Text>
+        <Text strong style={{ color: 'var(--ink)' }}>AI'dan soraw</Text>
       </div>
       <div style={{ display: 'flex', gap: 8 }}>
         <Input
           value={q}
           onChange={e => setQ(e.target.value)}
-          placeholder={`"${blockLabel}" bo'yicha savol...`}
+          placeholder={`"${blockLabel}" boyınsha soraw...`}
           onPressEnter={ask}
           style={{ borderRadius: 10 }}
         />
@@ -139,7 +139,7 @@ const BlockPanel: React.FC<{ block: InfographicBlock | null; topicId: string; on
           {block.theory && (
             <div>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-                <ReadOutlined style={{ color: 'var(--accent-ink)' }} /><Text strong style={{ color: 'var(--ink)' }}>Nazariya</Text>
+                <ReadOutlined style={{ color: 'var(--accent-ink)' }} /><Text strong style={{ color: 'var(--ink)' }}>Teoriya</Text>
               </div>
               <Paragraph style={{ color: 'var(--ink)', fontSize: 14.5, lineHeight: 1.8, margin: 0, whiteSpace: 'pre-wrap' }}>
                 {block.theory}
@@ -202,7 +202,7 @@ const BlockCard: React.FC<{ block: InfographicBlock; index?: number; onClick: ()
         </Text>
       )}
       <div style={{ display: 'flex', gap: 6, marginTop: 10, flexWrap: 'wrap' }}>
-        {block.theory && <Tag icon={<ReadOutlined />} color="green" style={{ margin: 0 }}>Nazariya</Tag>}
+        {block.theory && <Tag icon={<ReadOutlined />} color="green" style={{ margin: 0 }}>Teoriya</Tag>}
         {block.videoUrl && <Tag icon={<VideoCameraOutlined />} color="blue" style={{ margin: 0 }}>Video</Tag>}
         {block.quiz && <Tag icon={<BulbOutlined />} color="gold" style={{ margin: 0 }}>Test</Tag>}
         {block.aiEnabled && <Tag icon={<RobotOutlined />} color="purple" style={{ margin: 0 }}>AI</Tag>}
@@ -230,7 +230,7 @@ const SingleInfographic: React.FC<{ data: Infographic; topicId: string }> = ({ d
           src={data.imageUrl}
           alt={data.title}
           style={{ borderRadius: 12, maxWidth: '100%' }}
-          preview={{ mask: 'Kattalashtirish' }}
+          preview={{ mask: 'Úlkeytiw' }}
         />
       </section>
     );

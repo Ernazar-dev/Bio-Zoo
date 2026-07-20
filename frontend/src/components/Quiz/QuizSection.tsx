@@ -39,7 +39,7 @@ const FileViewer: React.FC<{ url: string; fileType: string; title: string }> = (
       setWordError(null);
       fetch(url)
         .then((r) => {
-          if (!r.ok) throw new Error('Faylni yuklab olishda xatolik');
+          if (!r.ok) throw new Error('Fayldi júklep alıwda qátelik');
           return r.arrayBuffer();
         })
         .then((buf) => mammoth.convertToHtml({ arrayBuffer: buf }))
@@ -49,7 +49,7 @@ const FileViewer: React.FC<{ url: string; fileType: string; title: string }> = (
         })
         .catch((err) => {
           console.error('Mammoth error:', err);
-          setWordError("Word hujjatini sayt ichida ko'rsatishda xatolik yuz berdi. Pastdagi tugma orqali yuklab olishingiz mumkin.");
+          setWordError("Word hújjetin sayt ishinde kórsetiwde qátelik júz berdi. Tómendegi túyme arqalı júklep alıwıńız múmkin.");
         })
         .finally(() => {
           setLoadingWord(false);
@@ -122,7 +122,7 @@ const FileViewer: React.FC<{ url: string; fileType: string; title: string }> = (
               border: '1px solid var(--line)',
               borderRadius: 12
             }}>
-              <Spin tip="Word hujjati o'qilmoqda..." />
+              <Spin tip="Word hújjeti oqılmaqta..." />
             </div>
           )}
           {wordError && (
@@ -168,14 +168,14 @@ const FileViewer: React.FC<{ url: string; fileType: string; title: string }> = (
           padding: 24,
           textAlign: 'center'
         }}>
-          <Text type="secondary" style={{ marginBottom: 12 }}>Ushbu faylni brauzerda onlayn ko'rib bo'lmaydi.</Text>
-          <Button href={url} target="_blank" icon={<DownloadOutlined />}>Faylni yuklab olish</Button>
+          <Text type="secondary" style={{ marginBottom: 12 }}>Bul fayldi brauzerde onlayn kórip bolmaydı.</Text>
+          <Button href={url} target="_blank" icon={<DownloadOutlined />}>Fayldi júklep alıw</Button>
         </div>
       )}
 
       <div style={{ marginTop: 12, display: 'flex', justifyContent: 'center' }}>
         <Button size="small" type="link" icon={<DownloadOutlined />} href={url} target="_blank">
-          Faylni alohida oynada ochish / yuklab olish
+          Fayldi bólek aynada ashıw / júklep alıw
         </Button>
       </div>
     </div>
@@ -229,12 +229,12 @@ const QuizSection: React.FC<Props> = ({
       setResultModalOpen(true);
       setExamStarted(false);
       if (data.alreadyAnswered) {
-        message.info('Siz bu testni avval topshirgansiz — oldingi natijangiz ko\'rsatilmoqda.');
+        message.info('Siz bul testti aldın tapsırǵansız — aldınǵı nátijeńiz kórsetilmekte.');
       } else {
-        message.success(`Test topshirildi! Siz ${Math.round(data.score)}% to'g'ri javob berdingiz va +${data.earnedPoints} ball oldingiz!`);
+        message.success(`Test tapsırıldı! Siz ${Math.round(data.score)}% durıs juwap berdińiz hám +${data.earnedPoints} ball aldıńız!`);
       }
     },
-    onError: () => message.error('Javoblarni yuborishda xato yuz berdi'),
+    onError: () => message.error('Juwaplardı jiberiwde qátelik júz berdi'),
   });
 
   // Himoya: exam rejimi yoqilgan-u, activeQuiz yo'q bo'lsa (kutilmagan holat),
@@ -263,7 +263,7 @@ const QuizSection: React.FC<Props> = ({
   if (isLoading) return <Spin style={{ display: 'block', margin: '40px auto' }} />;
 
   const handleStartExam = (quiz: Quiz) => {
-    if (!user) { message.warning('Testni boshlash uchun iltimos tizimga kiring!'); return; }
+    if (!user) { message.warning('Testti baslaw ushın iltimos dizimge kiriń!'); return; }
     setActiveQuiz(quiz);
     setAnswers({});
     setExamStarted(true);
@@ -282,21 +282,20 @@ const QuizSection: React.FC<Props> = ({
   };
 
   const handleSubmit = () => {
-    const unanswered = Array.from({ length: activeQuiz!.questionCount }, (_, i) => i + 1).filter(n => !answers[String(n)]);
     if (unanswered.length > 0) {
       Modal.confirm({
         title: 'Diqqat',
-        content: `Siz hali ${unanswered.length} ta savolga javob bermadingiz (Savollar: ${unanswered.join(', ')}). Shunga qaramay testni yakunlamoqchimisiz?`,
-        okText: 'Ha, yakunlash',
-        cancelText: 'Ortga',
+        content: `Siz ele ${unanswered.length} sorawǵa juwap bermedińiz (Sorawlar: ${unanswered.join(', ')}). Sogan qaramay testti jumaqlamaqshısız ba?`,
+        okText: 'Awa, jumaqlaw',
+        cancelText: 'Artqa',
         onOk() { submitTest(answers); },
       });
     } else {
       Modal.confirm({
-        title: 'Testni yakunlash',
-        content: 'Barcha savollarga javob berib bo\'ldingiz. Testni topshirishni tasdiqlaysizmi?',
-        okText: 'Ha, topshirish',
-        cancelText: 'Ortga',
+        title: 'Testti jumaqlaw',
+        content: 'Barlıq sorawlarǵa juwap berip boldıńız. Testti tapsırıwdı tastıyıqlaysız ba?',
+        okText: 'Awa, tapsırıw',
+        cancelText: 'Artqa',
         onOk() { submitTest(answers); },
       });
     }
@@ -510,7 +509,7 @@ const QuizSection: React.FC<Props> = ({
             background: 'var(--surface)',
           }}>
             <LeafOutline size={48} color="var(--muted)" style={{ opacity: 0.5, marginBottom: 16 }} />
-            <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0 }}>Hozircha ushbu mavzu uchun testlar qo'shilmagan.</p>
+            <p style={{ color: 'var(--muted)', fontSize: 15, margin: 0 }}>Házirshe bul tema ushın testler qosılmaǵan.</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }}>
@@ -535,11 +534,11 @@ const QuizSection: React.FC<Props> = ({
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 20 }}>
                       <div className="stat-badge-premium">
                         <FileTextOutlined />
-                        <span>Savollar soni: <strong>{quiz.questionCount} ta</strong></span>
+                        <span>Sorawlar sanı: <strong>{quiz.questionCount}</strong></span>
                       </div>
                       <div className="stat-badge-premium">
                         <ClockCircleOutlined />
-                        <span>Vaqt cheklovi: <strong>{quiz.timeLimit > 0 ? `${quiz.timeLimit} daqiqa` : 'Cheklanmagan'}</strong></span>
+                        <span>Vaqıt sheklewi: <strong>{quiz.timeLimit > 0 ? `${quiz.timeLimit} minut` : 'Sheklenbegen'}</strong></span>
                       </div>
                     </div>
 
@@ -563,7 +562,7 @@ const QuizSection: React.FC<Props> = ({
                           strokeColor="var(--accent)"
                         />
                         <div>
-                          <Text style={{ display: 'block', fontSize: 12.5, color: 'var(--muted)', lineHeight: '1.2' }}>To'g'ri javoblar:</Text>
+                          <Text style={{ display: 'block', fontSize: 12.5, color: 'var(--muted)', lineHeight: '1.2' }}>Durıs juwaplar:</Text>
                           <Text strong style={{ fontSize: 14, color: 'var(--ink)' }}>{myResult.correctCount} / {myResult.totalCount}</Text>
                           <div style={{ marginTop: 2 }}>
                             <Tag color="green" style={{ border: 'none', fontWeight: 700, padding: '0 6px', fontSize: 11 }}>+{myResult.earnedPoints} ball</Tag>
@@ -582,7 +581,7 @@ const QuizSection: React.FC<Props> = ({
                         onClick={() => handleStartExam(quiz)}
                         style={{ height: 42, borderRadius: 12 }}
                       >
-                        Testni boshlash
+                        Testti baslaw
                       </Button>
                     </div>
                   )}
@@ -609,8 +608,8 @@ const QuizSection: React.FC<Props> = ({
               }}>
                 <TrophyOutlined />
               </div>
-              <Title level={3} style={{ color: 'var(--ink)', margin: '0 0 8px 0' }}>Sizning Natijangiz</Title>
-              <Paragraph type="secondary" style={{ marginBottom: 24 }}>Test muvaffaqiyatli yakunlandi va tizimda saqlandi.</Paragraph>
+              <Title level={3} style={{ color: 'var(--ink)', margin: '0 0 8px 0' }}>Sizdiń Nátijeńiz</Title>
+              <Paragraph type="secondary" style={{ marginBottom: 24 }}>Test tabıslı jumaqlandı hám sistemada saqlandı.</Paragraph>
               
               <Progress
                 type="circle"
@@ -632,17 +631,17 @@ const QuizSection: React.FC<Props> = ({
                 textAlign: 'left'
               }}>
                 <div>
-                  <Text type="secondary" style={{ fontSize: 13, display: 'block' }}>To'g'ri javoblar</Text>
+                  <Text type="secondary" style={{ fontSize: 13, display: 'block' }}>Durıs juwaplar</Text>
                   <Text strong style={{ fontSize: 16, color: 'var(--ink)' }}>{resultModalData.correctCount} / {resultModalData.totalCount}</Text>
                 </div>
                 <div>
-                  <Text type="secondary" style={{ fontSize: 13, display: 'block' }}>Kiritilgan ball</Text>
+                  <Text type="secondary" style={{ fontSize: 13, display: 'block' }}>Toplanǵan ball</Text>
                   <Text strong style={{ fontSize: 16, color: 'var(--accent)' }}>+{resultModalData.earnedPoints} ball</Text>
                 </div>
               </div>
 
               <Button type="primary" block size="large" style={{ marginTop: 24, borderRadius: 12 }} onClick={() => setResultModalOpen(false)}>
-                Tushunarli
+                Túsinikli
               </Button>
             </div>
           )}
@@ -831,21 +830,21 @@ const QuizSection: React.FC<Props> = ({
           }}>
             {/* Header with timer and title */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, flexShrink: 0 }}>
-              <Text strong style={{ fontSize: 16, color: 'var(--ink)' }}>Javoblar varaqasi</Text>
+              <Text strong style={{ fontSize: 16, color: 'var(--ink)' }}>Juwaplar varagı</Text>
               {activeQuiz!.timeLimit > 0 ? (
                 <div className={`timer-badge ${timerClass}`}>
                   <ClockCircleOutlined />
                   <span>{formatTime(timeLeft)}</span>
                 </div>
               ) : (
-                <Tag color="default" style={{ borderRadius: 10, padding: '4px 10px', fontWeight: 600 }}>Vaqt cheklanmagan</Tag>
+                <Tag color="default" style={{ borderRadius: 10, padding: '4px 10px', fontWeight: 600 }}>Vaqıt sheklenbegen</Tag>
               )}
             </div>
 
             {/* Progress */}
             <div style={{ marginBottom: 12, flexShrink: 0 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4, fontSize: 13 }}>
-                <Text type="secondary">Belgilandi:</Text>
+                <Text type="secondary">Belgilendi:</Text>
                 <Text strong style={{ color: 'var(--accent-ink)' }}>{answeredCount} / {activeQuiz!.questionCount}</Text>
               </div>
               <Progress percent={progressPercent} strokeColor="var(--accent)" trailColor="var(--line)" showInfo={false} size="small" />
@@ -884,7 +883,7 @@ const QuizSection: React.FC<Props> = ({
                 const isRowAnswered = !!answers[String(num)];
                 return (
                   <div key={num} id={`q-row-${num}`} className={`question-row-premium ${isRowAnswered ? 'answered' : ''}`}>
-                    <Text strong style={{ fontSize: 14, color: 'var(--ink)', flexShrink: 0 }}>{num < 10 ? `0${num}` : num}-savol</Text>
+                    <Text strong style={{ fontSize: 14, color: 'var(--ink)', flexShrink: 0 }}>{num < 10 ? `0${num}` : num}-soraw</Text>
                     <Space size={5}>
                       {['A', 'B', 'C', 'D'].map(opt => {
                         const isSelected = answers[String(num)] === opt;
@@ -914,7 +913,7 @@ const QuizSection: React.FC<Props> = ({
               onClick={handleSubmit}
               loading={isPending}
             >
-              Testni yakunlash
+              Testti jumaqlaw
             </Button>
           </div>
         </Col>

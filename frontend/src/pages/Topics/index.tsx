@@ -24,8 +24,8 @@ const Topics: React.FC = () => {
         <Breadcrumb
           style={{ marginBottom: 20 }}
           items={[
-            { title: <Link to="/">Bosh sahifa</Link> },
-            { title: <Link to="/categories">Bo'limlar</Link> },
+            { title: <Link to="/">Bas bet</Link> },
+            { title: <Link to="/categories">Bólimler</Link> },
             { title: data.name },
           ]}
         />
@@ -45,7 +45,7 @@ const Topics: React.FC = () => {
         >
           <div>
             <span className="eyebrow">
-              <Leaf size={12} /> Bo'lim · {data.topics.length} ta mavzu
+              <Leaf size={12} /> Bólim · {data.topics.length} tema
             </span>
             <h1 className="display" style={{ fontSize: 'clamp(26px, 3.2vw, 38px)', margin: '8px 0 0' }}>
               {data.name}
@@ -62,9 +62,9 @@ const Topics: React.FC = () => {
           {data.topics.map((topic: any, index: number) => {
             const counts = topic._count ?? {};
             const meta = [
-              counts.materials > 0 && `${counts.materials} darslik`,
+              counts.materials > 0 && `${counts.materials} sabaqlıq`,
               counts.quizzes > 0 && `${counts.quizzes} test`,
-              counts.gameLinks > 0 && `${counts.gameLinks} video/o'yin`,
+              counts.gameLinks > 0 && `${counts.gameLinks} video/oyin`,
             ].filter(Boolean).join(' · ');
 
             return (
@@ -152,7 +152,7 @@ const Topics: React.FC = () => {
                         marginTop: 'auto',
                       }}
                     >
-                      <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>{meta || 'Tez orada'}</span>
+                      <span style={{ fontSize: 11.5, color: 'var(--muted)' }}>{meta || 'Tez arada'}</span>
                       <ArrowRightOutlined className="arrow" style={{ fontSize: 12, color: 'var(--accent-ink)' }} />
                     </div>
                   </div>

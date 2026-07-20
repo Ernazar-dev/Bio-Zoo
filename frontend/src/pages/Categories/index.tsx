@@ -25,12 +25,12 @@ const Categories: React.FC = () => {
       <div className="page fade-in-up" style={{ width: '100%', maxWidth: 920 }}>
         {/* Markazlashgan sarlavha — kartalar bilan bitta kompozitsiyada */}
         <div style={{ textAlign: 'center', marginBottom: 20 }}>
-          <span className="eyebrow" style={{fontSize: '28px'}} ><Leaf size={40} /> Bo'limlar</span>
+          <span className="eyebrow" style={{fontSize: '28px'}} ><Leaf size={40} /> Bólimler</span>
           <h1 className="display" style={{ fontSize: 'clamp(30px, 4vw, 46px)', margin: '12px 0 10px' }}>
-            Nimani <em>o'rganamiz?</em>
+            Neni <em>úyrenemiz?</em>
           </h1>
           <p style={{ color: 'var(--muted)', fontSize: 14.5, margin: '0 auto', maxWidth: 420 }}>
-            O'rganishni xohlagan bo'limingizni tanlang
+            Úyreniwdi qálegen bólimińizdi tanlań
           </p>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14, marginTop: 22 }}>
             <span style={{ width: 56, height: 1, background: 'var(--line)' }} />
@@ -138,10 +138,10 @@ const Categories: React.FC = () => {
                     }}
                   >
                     <span style={{ fontSize: 13, color: 'rgba(255,255,255,0.85)', display: 'inline-flex', alignItems: 'center', gap: 7 }}>
-                      <Leaf size={12} color="#8fd0a8" /> {cat._count?.topics ?? 0} mavzu
+                      <Leaf size={12} color="#8fd0a8" /> {cat._count?.topics ?? 0} tema
                     </span>
                     <span className="arrow-cue" style={{ color: '#fff' }}>
-                      O'rganish <ArrowRightOutlined className="arrow" style={{ fontSize: 12 }} />
+                      Úyreniw <ArrowRightOutlined className="arrow" style={{ fontSize: 12 }} />
                     </span>
                   </div>
                 </div>

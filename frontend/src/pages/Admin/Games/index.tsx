@@ -29,13 +29,13 @@ const AdminGames: React.FC = () => {
 
   const save = useMutation({
     mutationFn: (values: any) => editing ? updateGame(editing.id, values) : createGame(values),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); setOpen(false); msg.success('Saqlandi'); },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato'),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); setOpen(false); msg.success('Saqlandı'); },
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik'),
   });
 
   const remove = useMutation({
     mutationFn: deleteGame,
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); msg.success("O'chirildi"); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); msg.success("Óshirildi"); },
   });
 
   const handleUploadFile = async (file: File) => {
@@ -43,9 +43,9 @@ const AdminGames: React.FC = () => {
     try {
       const { url } = await uploadFile(file);
       form.setFieldValue('url', url);
-      msg.success('Video fayl yuklandi');
+      msg.success('Video fayl júklendi');
     } catch {
-      msg.error('Video yuklashda xatolik yuz berdi');
+      msg.error('Video júklewde qátelik júz berdi');
     } finally {
       setUploading(false);
     }
@@ -58,9 +58,9 @@ const AdminGames: React.FC = () => {
   };
 
   const cols = [
-    { title: 'Video Nomi', dataIndex: 'title', key: 'title' },
+    { title: 'Video atı', dataIndex: 'title', key: 'title' },
     {
-      title: 'Turi',
+      title: 'Túri',
       dataIndex: 'platform',
       key: 'platform',
       render: (p: string) => (
@@ -75,7 +75,7 @@ const AdminGames: React.FC = () => {
       render: (r: any) => (
         <Space>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
-          <Popconfirm title="O'chirilsinmi?" onConfirm={() => remove.mutate(r.id)} okText="Ha" cancelText="Yo'q">
+          <Popconfirm title="Óshirilsin be?" onConfirm={() => remove.mutate(r.id)} okText="Awa" cancelText="Yaq">
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
         </Space>
@@ -87,59 +87,59 @@ const AdminGames: React.FC = () => {
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 4, padding: 24 }}>
       {ctxHolder}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 20, flexWrap: 'wrap', gap: 12 }}>
-        <Title level={3} style={{ margin: 0 }}>Video darslar</Title>
+        <Title level={3} style={{ margin: 0 }}>Video sabaqlar</Title>
         <Space>
-          <Select placeholder="Mavzu tanlang" style={{ width: 280 }} value={selectedTopic || undefined} onChange={setSelectedTopic}
+          <Select placeholder="Tema tañlań" style={{ width: 280 }} value={selectedTopic || undefined} onChange={setSelectedTopic}
             options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" />
-          <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>Qo'shish</Button>
+          <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>Qosıw</Button>
         </Space>
       </div>
       {selectedTopic
         ? <Table dataSource={games} columns={cols} rowKey="id" loading={isLoading} />
-        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Mavzu tanlang</div>
+        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Tema tañlań</div>
       }
 
       <Modal
-        title={editing ? "Video darsni tahrirlash" : "Yangi video dars qo'shish"}
+        title={editing ? "Video sabaqtı redaktorlaw" : "Jaña video sabaq qosıw"}
         open={open}
         onCancel={() => setOpen(false)}
         onOk={() => form.validateFields().then(v => save.mutate(v))}
         confirmLoading={save.isPending || uploading}
-        okText="Saqlash"
+        okText="Saqlaw"
         width={680}
       >
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
           <Row gutter={16}>
             <Col xs={24} sm={12}>
-              <Form.Item name="topicId" label="Mavzu" rules={[{ required: true }]}>
+              <Form.Item name="topicId" label="Tema" rules={[{ required: true }]}>
                 <Select options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" />
               </Form.Item>
             </Col>
             <Col xs={24} sm={12}>
-              <Form.Item name="title" label="Video nomi" rules={[{ required: true, message: 'Video nomini kiriting' }]}><Input /></Form.Item>
+              <Form.Item name="title" label="Video atı" rules={[{ required: true, message: 'Video atın kiritiń' }]}><Input /></Form.Item>
             </Col>
           </Row>
 
-          <Form.Item name="platform" label="Video manbasi (Turi)" rules={[{ required: true }]}>
+          <Form.Item name="platform" label="Video deregi (Túri)" rules={[{ required: true }]}>
             <Radio.Group onChange={() => form.setFieldValue('url', '')}>
-              <Radio.Button value="YOUTUBE">YouTube Havolasi</Radio.Button>
-              <Radio.Button value="FILE">Kompyuterdan yuklash (.mp4, .webm)</Radio.Button>
+              <Radio.Button value="YOUTUBE">YouTube siltewi</Radio.Button>
+              <Radio.Button value="FILE">Kompyuterden júklew (.mp4, .webm)</Radio.Button>
             </Radio.Group>
           </Form.Item>
 
           {watchPlatform === 'YOUTUBE' ? (
             <Form.Item
               name="url"
-              label="YouTube Video Havolasi (URL)"
+              label="YouTube video siltewi (URL)"
               rules={[
-                { required: true, message: 'YouTube havolasini kiriting' },
-                { type: 'url', message: 'To\'g\'ri URL kiriting' }
+                { required: true, message: 'YouTube siltewin kiritiń' },
+                { type: 'url', message: 'Durıs URL kiritiń' }
               ]}
             >
               <Input placeholder="https://www.youtube.com/watch?v=..." />
             </Form.Item>
           ) : (
-            <Form.Item label="Video faylini yuklang" required>
+            <Form.Item label="Video faylın júkleń" required>
               <Space direction="vertical" style={{ width: '100%' }}>
                 <Upload
                   beforeUpload={(file) => {
@@ -151,21 +151,21 @@ const AdminGames: React.FC = () => {
                   accept="video/*"
                 >
                   <Button icon={<UploadOutlined />} loading={uploading}>
-                    {uploading ? 'Yuklanmoqda...' : 'Video tanlash'}
+                    {uploading ? 'Júklenbekte...' : 'Video tañlaw'}
                   </Button>
                 </Upload>
                 <Form.Item
                   name="url"
                   noStyle
-                  rules={[{ required: true, message: 'Iltimos, video fayl yuklang' }]}
+                  rules={[{ required: true, message: 'Iltimos, video fayl júkleń' }]}
                 >
-                  <Input placeholder="Yuklangan fayl havolasi" disabled />
+                  <Input placeholder="Júklengen fayl siltewi" disabled />
                 </Form.Item>
               </Space>
             </Form.Item>
           )}
 
-          <Form.Item name="description" label="Tavsif (ixtiyoriy)"><Input.TextArea rows={2} /></Form.Item>
+          <Form.Item name="description" label="Tariyp (qálewli)"><Input.TextArea rows={2} /></Form.Item>
         </Form>
       </Modal>
     </div>

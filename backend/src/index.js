@@ -45,7 +45,7 @@ app.use(
     limit: 300,
     standardHeaders: 'draft-8',
     legacyHeaders: false,
-    message: { message: "So'rovlar soni ko'payib ketdi, birozdan so'ng urinib ko'ring" },
+    message: { message: "Sorawlar sanı kóbeyip ketti, birazdan soń qaytadan urınıp kóriń" },
   })
 );
 
@@ -57,7 +57,7 @@ app.use(
     limit: 20,
     standardHeaders: 'draft-8',
     legacyHeaders: false,
-    message: { message: "Juda ko'p urinish. 15 daqiqadan so'ng qayta urinib ko'ring" },
+    message: { message: "Juda kóp urınıs. 15 minuttan soń qaytadan urınıp kóriń" },
   })
 );
 // Lokal devda eski diskdagi fayllar uchun (deployda fayllar DB da)
@@ -80,18 +80,18 @@ app.use('/api/interactives', interactiveRoutes);
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 
 // Noma'lum API yo'llari uchun JSON 404
-app.use('/api', (req, res) => res.status(404).json({ message: 'Topilmadi' }));
+app.use('/api', (req, res) => res.status(404).json({ message: 'Tabılmadı' }));
 
 // Global xato ushlagich — mijozga har doim JSON qaytadi (HTML emas)
 app.use((err, req, res, next) => {
   console.error(err);
   if (err.code === 'LIMIT_FILE_SIZE') {
     const maxMb = process.env.MAX_FILE_SIZE_MB || '25';
-    return res.status(400).json({ message: `Fayl hajmi ${maxMb} MB dan oshmasligi kerak` });
+    return res.status(400).json({ message: `Fayl ólshemi ${maxMb} MB dan aspaslıǵı kerek` });
   }
   const status = err.status || 500;
   // Ichki xato tafsilotlari (stack, Prisma/DB xabarlari) mijozga chiqarilmaydi
-  const message = status < 500 && err.message ? err.message : 'Server xatosi';
+  const message = status < 500 && err.message ? err.message : 'Server qáteligi';
   res.status(status).json({ message });
 });
 

@@ -51,26 +51,26 @@ router.get('/:slug', async (req, res) => {
       },
     },
   });
-  if (!subject) return res.status(404).json({ message: 'Topilmadi' });
+  if (!subject) return res.status(404).json({ message: 'Tabılmadı' });
   res.json(subject);
 });
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { name, description, imageUrl, order } = req.body;
-  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek ǵana http(s) bolıwı múmkin' });
   try {
     const slug = req.body.slug || (await uniqueSlug(name));
     const subject = await prisma.subject.create({ data: { name, slug, description, imageUrl, order: order || 0 } });
     res.status(201).json(subject);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Maǵlıwmatlar nadurıs' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { name, slug, description, imageUrl, order } = req.body;
-  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek ǵana http(s) bolıwı múmkin' });
   try {
     const subject = await prisma.subject.update({
       where: { id: req.params.id },
@@ -79,14 +79,14 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(subject);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Maǵlıwmatlar nadurıs' });
   }
 });
 
 router.delete('/:id', authenticate, adminOnly, async (req, res) => {
   // Fan o'chirilsa, kategoriyalar o'chmaydi — subjectId null bo'ladi (schema: onDelete SetNull)
   await prisma.subject.delete({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  res.json({ message: 'Óshirildi' });
 });
 
 module.exports = router;

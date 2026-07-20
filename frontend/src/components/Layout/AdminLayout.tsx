@@ -14,16 +14,16 @@ const { Sider, Header, Content } = Layout;
 
 const menuItems = [
   { key: '/admin', icon: <DashboardOutlined />, label: <Link to="/admin">Dashboard</Link> },
-  { key: '/admin/subjects', icon: <ExperimentOutlined />, label: <Link to="/admin/subjects">Fanlar</Link> },
+  { key: '/admin/subjects', icon: <ExperimentOutlined />, label: <Link to="/admin/subjects">Pánler</Link> },
   { key: '/admin/categories', icon: <AppstoreOutlined />, label: <Link to="/admin/categories">Kategoriyalar</Link> },
-  { key: '/admin/topics', icon: <BookOutlined />, label: <Link to="/admin/topics">Mavzular</Link> },
+  { key: '/admin/topics', icon: <BookOutlined />, label: <Link to="/admin/topics">Temalar</Link> },
   { key: '/admin/materials', icon: <FileImageOutlined />, label: <Link to="/admin/materials">Materiallar</Link> },
   { key: '/admin/infographics', icon: <PartitionOutlined />, label: <Link to="/admin/infographics">Infografikalar</Link> },
   { key: '/admin/interactives', icon: <ExperimentOutlined />, label: <Link to="/admin/interactives">Interaktiv</Link> },
-  { key: '/admin/quizzes', icon: <QuestionCircleOutlined />, label: <Link to="/admin/quizzes">Testlar</Link> },
-  { key: '/admin/games', icon: <VideoCameraOutlined />, label: <Link to="/admin/games">Video darslar</Link> },
-  { key: '/admin/play-games', icon: <RocketOutlined />, label: <Link to="/admin/play-games">O'yinlar</Link> },
-  { key: '/admin/students', icon: <TeamOutlined />, label: <Link to="/admin/students">Studentlar</Link> },
+  { key: '/admin/quizzes', icon: <QuestionCircleOutlined />, label: <Link to="/admin/quizzes">Testler</Link> },
+  { key: '/admin/games', icon: <VideoCameraOutlined />, label: <Link to="/admin/games">Video sabaqlar</Link> },
+  { key: '/admin/play-games', icon: <RocketOutlined />, label: <Link to="/admin/play-games">Oyinlar</Link> },
+  { key: '/admin/students', icon: <TeamOutlined />, label: <Link to="/admin/students">Studentler</Link> },
 ];
 
 const AdminLayout: React.FC = () => {
@@ -70,7 +70,7 @@ const AdminLayout: React.FC = () => {
           borderBottom: '1px solid var(--line)',
           height: 60,
         }}>
-          <Button icon={<LogoutOutlined />} onClick={handleLogout}>Chiqish</Button>
+          <Button icon={<LogoutOutlined />} onClick={handleLogout}>Shıgıw</Button>
         </Header>
         <Content style={{ margin: 24, minHeight: 280 }}>
           <Suspense fallback={<div style={{ display: 'flex', justifyContent: 'center', padding: 80 }}><Spin size="large" /></div>}>

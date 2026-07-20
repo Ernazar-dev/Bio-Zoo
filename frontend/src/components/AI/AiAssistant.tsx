@@ -6,9 +6,9 @@ import { askAi, type AiChatMessage } from '../../api/ai';
 const { Text, Paragraph } = Typography;
 
 const SUGGESTIONS = [
-  'Bu mavzuni qisqacha tushuntirib ber',
-  'Asosiy tushunchalarni sanab ber',
-  'Menga 3 ta savol ber',
+  'Bul temandı qısqasha túsindirip ber',
+  'Tiykarǵı túsiniklerdi sanap ber',
+  'Maǵan 3 soraw ber',
 ];
 
 const AiAssistant: React.FC<{ topicId: string; topicTitle: string }> = ({ topicId, topicTitle }) => {
@@ -34,7 +34,7 @@ const AiAssistant: React.FC<{ topicId: string; topicTitle: string }> = ({ topicI
       const res = await askAi({ topicId, messages: next });
       setMessages([...next, { role: 'assistant', content: res.reply }]);
     } catch (e: any) {
-      setError(e.response?.data?.message || 'AI bilan bog\'lanishda xatolik yuz berdi');
+      setError(e.response?.data?.message || "AI menen baylanısıwda qátelik júz berdi");
     } finally {
       setLoading(false);
     }
@@ -55,8 +55,8 @@ const AiAssistant: React.FC<{ topicId: string; topicTitle: string }> = ({ topicI
           <RobotOutlined />
         </div>
         <div>
-          <Text strong style={{ fontSize: 15, color: 'var(--ink)', display: 'block' }}>AI Yordamchi</Text>
-          <Text type="secondary" style={{ fontSize: 12.5 }}>{topicTitle} mavzusi bo'yicha savol bering</Text>
+          <Text strong style={{ fontSize: 15, color: 'var(--ink)', display: 'block' }}>AI Járdemshi</Text>
+          <Text type="secondary" style={{ fontSize: 12.5 }}>{topicTitle} teması boyınsha soraw beriń</Text>
         </div>
       </div>
 
@@ -71,9 +71,9 @@ const AiAssistant: React.FC<{ topicId: string; topicTitle: string }> = ({ topicI
             }}>
               <BulbOutlined />
             </div>
-            <Text strong style={{ fontSize: 16, color: 'var(--ink)', display: 'block' }}>Nimadan boshlaymiz?</Text>
+            <Text strong style={{ fontSize: 16, color: 'var(--ink)', display: 'block' }}>Neden baslaymız?</Text>
             <Paragraph type="secondary" style={{ fontSize: 13.5, marginTop: 6 }}>
-              Mavzu yuzasidan istalgan savolingizni yozing yoki quyidagilardan birini tanlang.
+              Tema boyınsha qálegen sorawıńızdı jazıń yamasa tómendegilerden birewin tanlań.
             </Paragraph>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, justifyContent: 'center', marginTop: 12 }}>
               {SUGGESTIONS.map(s => (
@@ -125,7 +125,7 @@ const AiAssistant: React.FC<{ topicId: string; topicTitle: string }> = ({ topicI
         <Input.TextArea
           value={input}
           onChange={e => setInput(e.target.value)}
-          placeholder="Savolingizni yozing..."
+          placeholder="Sorawıńızdı jazıń..."
           autoSize={{ minRows: 1, maxRows: 4 }}
           onPressEnter={(e) => { if (!e.shiftKey) { e.preventDefault(); send(input); } }}
           style={{ borderRadius: 12 }}

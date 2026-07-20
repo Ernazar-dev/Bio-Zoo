@@ -72,26 +72,26 @@ router.get('/:slug', async (req, res) => {
       },
     },
   });
-  if (!category) return res.status(404).json({ message: 'Topilmadi' });
+  if (!category) return res.status(404).json({ message: 'Tabılmadı' });
   res.json(category);
 });
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { name, description, imageUrl, order, subjectId } = req.body;
-  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   try {
     const slug = req.body.slug || (await uniqueSlug(name));
     const category = await prisma.category.create({ data: { name, slug, description, imageUrl, order: order || 0, subjectId: subjectId || null } });
     res.status(201).json(category);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { name, slug, description, imageUrl, order, subjectId } = req.body;
-  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   try {
     const category = await prisma.category.update({
       where: { id: req.params.id },
@@ -100,7 +100,7 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(category);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 

@@ -58,7 +58,7 @@ const Profile: React.FC = () => {
   if (!user) return <Navigate to="/login" replace />;
   if (user.role === 'ADMIN') return <Navigate to="/admin" replace />;
 
-  const topicTitle = (id: string) => topics.find((t: any) => t.id === id)?.title || 'Mavzu';
+  const topicTitle = (id: string) => topics.find((t: any) => t.id === id)?.title || 'Tema';
   const memberSince = me?.createdAt ? new Date(me.createdAt).toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long' }) : '';
 
   const byTopic = (progress?.byTopic || [])
@@ -78,7 +78,7 @@ const Profile: React.FC = () => {
             <div style={{ flex: 1, minWidth: 200 }}>
               <Title level={3} style={{ margin: 0, color: 'var(--ink)' }}>{user.name}</Title>
               <Text type="secondary" style={{ fontSize: 13.5 }}>
-                @{me?.login || user.login}{memberSince && ` · ${memberSince} dan beri`}
+                @{me?.login || user.login}{memberSince && ` · ${memberSince} dan berli`}
               </Text>
             </div>
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
@@ -93,7 +93,7 @@ const Profile: React.FC = () => {
                   <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--ink)', display: 'flex', alignItems: 'center', gap: 6, justifyContent: 'center' }}>
                     <CrownOutlined style={{ color: '#f0a10e', fontSize: 22 }} />{rank.rank}
                   </div>
-                  <Text style={{ color: 'var(--muted)', fontSize: 12.5 }}>reyting o'rni</Text>
+                  <Text style={{ color: 'var(--muted)', fontSize: 12.5 }}>reyting ornı</Text>
                 </div>
               )}
             </div>
@@ -104,7 +104,7 @@ const Profile: React.FC = () => {
 
           {/* ——— Taraqqiyot ——— */}
           <Card>
-            <SectionTitle icon={<RiseOutlined />} title="Taraqqiyot" />
+            <SectionTitle icon={<RiseOutlined />} title="Rawajlanıw" />
             <div style={{ display: 'flex', alignItems: 'center', gap: 22, marginBottom: 20, flexWrap: 'wrap' }}>
               <Progress
                 type="circle"
@@ -114,22 +114,22 @@ const Profile: React.FC = () => {
                 format={(p) => <span style={{ color: 'var(--ink)', fontWeight: 700 }}>{p}%</span>}
               />
               <div style={{ flex: 1, minWidth: 160 }}>
-                <Text strong style={{ color: 'var(--ink)', fontSize: 15 }}>Umumiy o'zlashtirish</Text>
+                <Text strong style={{ color: 'var(--ink)', fontSize: 15 }}>Ulıwma ózlestiriw</Text>
                 <Paragraph type="secondary" style={{ fontSize: 13, margin: '4px 0 0' }}>
-                  Jami {progress?.totalQuizzes ?? 0} ta testdan {progress?.mastered ?? 0} tasini muvaffaqiyatli topshirdingiz.
+                  Jámi {progress?.totalQuizzes ?? 0} testten {progress?.mastered ?? 0} testti tabıslı tapsırdıńız.
                 </Paragraph>
               </div>
             </div>
 
             <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginBottom: byTopic.length ? 20 : 0 }}>
-              <StatTile label="O'zlashtirilgan" value={progress?.mastered ?? 0} icon={<CheckCircleOutlined />} color="#1b8a4e" />
-              <StatTile label="O'rganilmoqda" value={progress?.learning ?? 0} icon={<ReadOutlined />} color="#f0a10e" />
-              <StatTile label="Qolgan" value={progress?.remaining ?? 0} icon={<FileDoneOutlined />} color="var(--muted)" />
+              <StatTile label="Ózlestirilgen" value={progress?.mastered ?? 0} icon={<CheckCircleOutlined />} color="#1b8a4e" />
+              <StatTile label="Úyrenilmekte" value={progress?.learning ?? 0} icon={<ReadOutlined />} color="#f0a10e" />
+              <StatTile label="Qalǵan" value={progress?.remaining ?? 0} icon={<FileDoneOutlined />} color="var(--muted)" />
             </div>
 
             {byTopic.length > 0 && (
               <div>
-                <Text strong style={{ color: 'var(--ink)', fontSize: 13.5, display: 'block', marginBottom: 10 }}>Mavzular bo'yicha</Text>
+                <Text strong style={{ color: 'var(--ink)', fontSize: 13.5, display: 'block', marginBottom: 10 }}>Temalar boyınsha</Text>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                   {byTopic.map((t) => (
                     <div key={t.topicId}>
@@ -150,7 +150,7 @@ const Profile: React.FC = () => {
             <SectionTitle
               icon={<TrophyOutlined />}
               title="Reyting"
-              extra={<Link to="/leaderboard" style={{ fontSize: 13, color: 'var(--accent-ink)' }}>To'liq reyting <RightOutlined style={{ fontSize: 10 }} /></Link>}
+              extra={<Link to="/leaderboard" style={{ fontSize: 13, color: 'var(--accent-ink)' }}>Tolıq reyting <RightOutlined style={{ fontSize: 10 }} /></Link>}
             />
             <div style={{
               textAlign: 'center', padding: '20px 16px', background: 'linear-gradient(135deg, var(--accent-soft), var(--bg))',
@@ -161,7 +161,7 @@ const Profile: React.FC = () => {
                 #{rank?.rank ?? '—'}
               </div>
               <Text style={{ color: 'var(--muted)', fontSize: 13.5 }}>
-                {rank?.total ? `${rank.total} o'quvchi orasida` : "Reyting ma'lumoti yo'q"}
+                {rank?.total ? `${rank.total} oqıwshı arasında` : "Reyting maǵlıwmatı joq"}
               </Text>
               <div style={{ marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 14px', background: 'var(--surface)', borderRadius: 999, border: '1px solid var(--line)' }}>
                 <Leaf size={13} color="var(--accent)" />
@@ -174,10 +174,10 @@ const Profile: React.FC = () => {
           {/* ——— Portfolio ——— */}
           <Card style={{ gridColumn: '1 / -1' }}>
             <SectionTitle icon={<ProfileOutlined />} title="Portfolio" extra={
-              <Text type="secondary" style={{ fontSize: 13 }}>{portfolio.length} ta topshirilgan test</Text>
+              <Text type="secondary" style={{ fontSize: 13 }}>{portfolio.length} tapsırılǵan test</Text>
             } />
             {portfolio.length === 0 ? (
-              <Empty description="Hali test topshirilmagan" image={Empty.PRESENTED_IMAGE_SIMPLE} />
+              <Empty description="Házirshe test tapsırılmaǵan" image={Empty.PRESENTED_IMAGE_SIMPLE} />
             ) : (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 320px), 1fr))', gap: 14 }}>
                 {portfolio.map((item) => (
@@ -187,7 +187,7 @@ const Profile: React.FC = () => {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 10 }}>
                       <div style={{ minWidth: 0 }}>
                         <Text strong style={{ color: 'var(--ink)', fontSize: 14.5, display: 'block' }} ellipsis>
-                          {item.quiz?.topic?.title || 'Mavzu'}
+                          {item.quiz?.topic?.title || 'Tema'}
                         </Text>
                         {item.quiz?.topic?.category?.name && (
                           <Text type="secondary" style={{ fontSize: 12.5 }}>{item.quiz.topic.category.name}</Text>
@@ -197,7 +197,7 @@ const Profile: React.FC = () => {
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 12 }}>
                       <Text style={{ color: 'var(--muted)', fontSize: 12.5 }}>
-                        {item.correctCount}/{item.totalCount} to'g'ri
+                        {item.correctCount}/{item.totalCount} durıs
                       </Text>
                       <Text style={{ color: 'var(--accent-ink)', fontSize: 12.5, fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                         <Leaf size={11} color="var(--accent)" />+{item.earnedPoints}

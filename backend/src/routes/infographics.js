@@ -15,14 +15,14 @@ router.get('/topic/:topicId', async (req, res) => {
 // Bitta infografika
 router.get('/:id', async (req, res) => {
   const item = await prisma.infographic.findUnique({ where: { id: req.params.id } });
-  if (!item) return res.status(404).json({ message: 'Topilmadi' });
+  if (!item) return res.status(404).json({ message: 'Tabılmadı' });
   res.json(item);
 });
 
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, title, imageUrl, order } = req.body;
-  if (!topicId || !title || !imageUrl) return res.status(400).json({ message: 'Majburiy maydonlar to\'ldirilmagan' });
-  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (!topicId || !title || !imageUrl) return res.status(400).json({ message: 'Majburiy maydanlar toldırılmaǵan' });
+  if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   try {
     const item = await prisma.infographic.create({
       data: {
@@ -35,13 +35,13 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
     res.status(201).json(item);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, imageUrl, order } = req.body;
-  if (imageUrl !== undefined && !isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL faqat http(s) bo\'lishi mumkin' });
+  if (imageUrl !== undefined && !isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   try {
     const item = await prisma.infographic.update({
       where: { id: req.params.id },
@@ -54,13 +54,13 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
     res.json(item);
   } catch (e) {
     console.error(e);
-    res.status(400).json({ message: 'Ma\'lumotlar noto\'g\'ri' });
+    res.status(400).json({ message: 'Ma\'lumotlar qáte' });
   }
 });
 
 router.delete('/:id', authenticate, adminOnly, async (req, res) => {
   await prisma.infographic.delete({ where: { id: req.params.id } });
-  res.json({ message: 'O\'chirildi' });
+  res.json({ message: 'Óshirildi' });
 });
 
 module.exports = router;

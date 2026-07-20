@@ -30,13 +30,13 @@ const AdminPlayGames: React.FC = () => {
       editing
         ? updateGame(editing.id, { ...values, platform: 'GAME' })
         : createGame({ ...values, platform: 'GAME' }),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); setOpen(false); msg.success('Saqlandi'); },
-    onError: (e: any) => msg.error(e.response?.data?.message || 'Xato'),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); setOpen(false); msg.success('Saqlandı'); },
+    onError: (e: any) => msg.error(e.response?.data?.message || 'Qátelik'),
   });
 
   const remove = useMutation({
     mutationFn: deleteGame,
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); msg.success("O'chirildi"); },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['games'] }); msg.success("Óshirildi"); },
   });
 
   const openModal = (record?: any) => {
@@ -46,9 +46,9 @@ const AdminPlayGames: React.FC = () => {
   };
 
   const cols = [
-    { title: "O'yin nomi", dataIndex: 'title', key: 'title' },
+    { title: "Oyin atı", dataIndex: 'title', key: 'title' },
     {
-      title: 'Havola (URL)',
+      title: 'Siltew (URL)',
       dataIndex: 'url',
       key: 'url',
       ellipsis: true,
@@ -59,7 +59,7 @@ const AdminPlayGames: React.FC = () => {
       ),
     },
     {
-      title: 'Tavsif',
+      title: 'Tariyp',
       dataIndex: 'description',
       key: 'description',
       ellipsis: true,
@@ -70,7 +70,7 @@ const AdminPlayGames: React.FC = () => {
       render: (r: any) => (
         <Space>
           <Button icon={<EditOutlined />} size="small" onClick={() => openModal(r)} />
-          <Popconfirm title="O'chirilsinmi?" onConfirm={() => remove.mutate(r.id)} okText="Ha" cancelText="Yo'q">
+          <Popconfirm title="Óshirilsin be?" onConfirm={() => remove.mutate(r.id)} okText="Awa" cancelText="Yaq">
             <Button icon={<DeleteOutlined />} size="small" danger />
           </Popconfirm>
         </Space>
@@ -82,52 +82,52 @@ const AdminPlayGames: React.FC = () => {
     <div style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderRadius: 4, padding: 24 }}>
       {ctxHolder}
       <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, flexWrap: 'wrap', gap: 12 }}>
-        <Title level={3} style={{ margin: 0 }}><RocketOutlined style={{ marginRight: 8 }} />O'yinlar</Title>
+        <Title level={3} style={{ margin: 0 }}><RocketOutlined style={{ marginRight: 8 }} />Oyinlar</Title>
         <Space>
-          <Select placeholder="Mavzu tanlang" style={{ width: 280 }} value={selectedTopic || undefined} onChange={setSelectedTopic}
+          <Select placeholder="Tema tañlań" style={{ width: 280 }} value={selectedTopic || undefined} onChange={setSelectedTopic}
             options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" />
-          <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>Qo'shish</Button>
+          <Button icon={<PlusOutlined />} type="primary" onClick={() => openModal()} disabled={!selectedTopic}>Qosıw</Button>
         </Space>
       </div>
       <Text type="secondary" style={{ display: 'block', marginBottom: 20 }}>
-        Wordwall, Kahoot, Quizizz kabi saytlarda tayyorlangan o'yin havolasini shu yerga joylang — o'quvchilar mavzu ichidagi "O'yinlar" bo'limidan bir tugma bilan o'tadi.
+        Wordwall, Kahoot, Quizizz sıyaqlı saytlarda tayarlanǵan oyin siltewin usı jerge qoyıń — oqıwshılar tema ishendegi "Oyinlar" bóliminen bir túyme arqalı ótedi.
       </Text>
       {selectedTopic
         ? <Table dataSource={games} columns={cols} rowKey="id" loading={isLoading} />
-        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Mavzu tanlang</div>
+        : <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>Tema tañlań</div>
       }
 
       <Modal
-        title={editing ? "O'yinni tahrirlash" : "Yangi o'yin qo'shish"}
+        title={editing ? "Oyindi redaktorlaw" : "Jaña oyin qosıw"}
         open={open}
         onCancel={() => setOpen(false)}
         onOk={() => form.validateFields().then(v => save.mutate(v))}
         confirmLoading={save.isPending}
-        okText="Saqlash"
+        okText="Saqlaw"
       >
         <Form form={form} layout="vertical" style={{ marginTop: 16 }}>
-          <Form.Item name="topicId" label="Mavzu" rules={[{ required: true }]}>
+          <Form.Item name="topicId" label="Tema" rules={[{ required: true }]}>
             <Select options={topics.map((t: any) => ({ value: t.id, label: t.title }))} showSearch optionFilterProp="label" />
           </Form.Item>
 
-          <Form.Item name="title" label="O'yin nomi" rules={[{ required: true, message: "O'yin nomini kiriting" }]}>
-            <Input placeholder="Masalan: Suyaklar nomini top!" />
+          <Form.Item name="title" label="Oyin atı" rules={[{ required: true, message: "Oyin atın kiritiń" }]}>
+            <Input placeholder="Mısalı: Súyekler atın tap!" />
           </Form.Item>
 
           <Form.Item
             name="url"
-            label="O'yin havolasi (URL)"
+            label="Oyin siltewi (URL)"
             rules={[
-              { required: true, message: "O'yin havolasini kiriting" },
-              { type: 'url', message: "To'g'ri URL kiriting (https://... bilan boshlansin)" },
+              { required: true, message: "Oyin siltewin kiritiń" },
+              { type: 'url', message: "Durıs URL kiritiń (https://... penen baslansın)" },
             ]}
-            extra="Wordwall, Kahoot, Quizizz va shunga o'xshash saytdan olingan havola"
+            extra="Wordwall, Kahoot, Quizizz hám usı sıyaqlı sayttan alınǵan siltew"
           >
             <Input placeholder="https://wordwall.net/resource/..." />
           </Form.Item>
 
-          <Form.Item name="description" label="Tavsif (ixtiyoriy)">
-            <Input.TextArea rows={2} placeholder="O'yin haqida qisqacha ma'lumot" />
+          <Form.Item name="description" label="Tariyp (qálewli)">
+            <Input.TextArea rows={2} placeholder="Oyin haqqında qısqasha maǵlıwmat" />
           </Form.Item>
         </Form>
       </Modal>

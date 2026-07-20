@@ -22,9 +22,9 @@ const Dashboard: React.FC = () => {
 
   const stats = [
     { title: 'Kategoriyalar', value: categories.length },
-    { title: 'Mavzular', value: topics.length },
-    { title: 'Studentlar', value: students.filter((s: any) => s.role === 'STUDENT').length },
-    { title: "Eng ko'p ball", value: leaders[0]?.points ?? 0 },
+    { title: 'Temalar', value: topics.length },
+    { title: 'Studentler', value: students.filter((s: any) => s.role === 'STUDENT').length },
+    { title: "Eń kóp ball", value: leaders[0]?.points ?? 0 },
   ];
 
   return (
@@ -66,8 +66,8 @@ const Dashboard: React.FC = () => {
             <div style={{ marginTop: 14 }}>
               {categories.map((c: any) => (
                 <div key={c.id} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid var(--line)' }}>
-                  <span style={{ color: 'var(--ink)', fontSize: 14 }}>{c.name}</span>
-                  <span style={{ color: 'var(--muted)', fontSize: 13 }}>{c._count?.topics ?? 0} mavzu</span>
+                   <span style={{ color: 'var(--ink)', fontSize: 14 }}>{c.name}</span>
+                   <span style={{ color: 'var(--muted)', fontSize: 13 }}>{c._count?.topics ?? 0} tema</span>
                 </div>
               ))}
             </div>

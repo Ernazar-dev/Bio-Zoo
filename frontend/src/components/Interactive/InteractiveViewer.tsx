@@ -64,7 +64,7 @@ const InteractiveCard: React.FC<{ item: Interactive }> = ({ item }) => {
           <>
             {!frameReady && (
               <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.7)', fontSize: 15, gap: 10 }}>
-                <Loading3QuartersOutlined spin /> Yuklanmoqda...
+                <Loading3QuartersOutlined spin /> Júklenbekte...
               </div>
             )}
             <iframe
@@ -86,8 +86,8 @@ const InteractiveCard: React.FC<{ item: Interactive }> = ({ item }) => {
             }}
           >
             <PlayCircleFilled style={{ fontSize: 58, color: '#2fb56b', filter: 'drop-shadow(0 4px 14px rgba(47,181,107,0.45))' }} />
-            <span style={{ fontSize: 15.5, fontWeight: 700 }}>Ochish va boshqarish</span>
-            <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.55)' }}>Sichqoncha bilan aylantiring · scroll — zoom</span>
+            <span style={{ fontSize: 15.5, fontWeight: 700 }}>Ashıw hám basqarıw</span>
+            <span style={{ fontSize: 12.5, color: 'rgba(255,255,255,0.55)' }}>Sıshqanşa menen aylandırıń · scroll — zoom</span>
           </button>
         )}
       </div>
@@ -97,7 +97,7 @@ const InteractiveCard: React.FC<{ item: Interactive }> = ({ item }) => {
           ? <Text style={{ color: 'var(--muted)', fontSize: 13.5, flex: 1, minWidth: 200 }}>{item.description}</Text>
           : <span style={{ flex: 1 }} />}
         <Button size="small" icon={<ExpandOutlined />} onClick={goFullscreen} style={{ flexShrink: 0 }}>
-          To'liq ekran
+          Tolıq ekran
         </Button>
       </div>
     </section>
