@@ -139,7 +139,7 @@ const AdminInteractives: React.FC = () => {
         message="Biypul derekler"
         description={
           <span>
-            3D modeller: <b>sketchfab.com</b> (Embed tugmasi → kodni nusxalang) · Simulyaciyalar: <b>phet.colorado.edu</b>, <b>javalab.org</b>, <b>biologysimulations.com</b> — bet siltewin yamasa embed kodın usı jerge qoyıń.
+            3D modeller: <b>sketchfab.com</b> (Embed túymesi → kodti nusqalań) · Simulyaciyalar: <b>phet.colorado.edu</b>, <b>javalab.org</b>, <b>biologysimulations.com</b> — bet siltewin yamasa embed kodın usı jerge qoyıń.
           </span>
         }
       />

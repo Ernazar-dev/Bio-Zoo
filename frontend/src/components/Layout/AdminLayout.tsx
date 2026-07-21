@@ -5,6 +5,7 @@ import {
   DashboardOutlined, AppstoreOutlined, BookOutlined,
   FileImageOutlined, QuestionCircleOutlined, VideoCameraOutlined,
   TeamOutlined, LogoutOutlined, RocketOutlined, ExperimentOutlined, PartitionOutlined,
+  HomeOutlined,
 } from '@ant-design/icons';
 import { useAuthStore } from '../../store/authStore';
 import { logout } from '../../api/auth';
@@ -67,9 +68,13 @@ const AdminLayout: React.FC = () => {
           display: 'flex',
           justifyContent: 'flex-end',
           alignItems: 'center',
+          gap: 12,
           borderBottom: '1px solid var(--line)',
           height: 60,
         }}>
+          <Button icon={<HomeOutlined />} onClick={() => navigate('/')}>
+            Saytqa ótiw
+          </Button>
           <Button icon={<LogoutOutlined />} onClick={handleLogout}>Shıgıw</Button>
         </Header>
         <Content style={{ margin: 24, minHeight: 280 }}>

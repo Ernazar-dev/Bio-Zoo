@@ -126,7 +126,7 @@ const AdminStudents: React.FC = () => {
       render: (r: any) => (
         <Popconfirm
           title="Studentti óshiriw"
-          description="Haqıyqatanda usı studentti barlıq maǵlıwmatları bilan óshirpekshisiz be?"
+          description="Haqıyqatanda usı studentti barlıq maǵlıwmatları menen óshirpekshisiz be?"
           okText="Awa"
           cancelText="Yaq"
           okButtonProps={{ danger: true }}
