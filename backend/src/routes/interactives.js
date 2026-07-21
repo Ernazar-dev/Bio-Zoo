@@ -47,6 +47,7 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
   if (!isAllowedEmbedUrl(embedUrl)) {
     return res.status(400).json({ message: 'Bul siltewge ruxsat joq. Tek: ' + ALLOWED_HOSTS.join(', ') });
   }
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : 0;
   try {
     const item = await prisma.interactive.create({
       data: {
@@ -55,7 +56,7 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
         title: String(title).slice(0, 200),
         embedUrl: String(embedUrl).trim(),
         description: description ? String(description).slice(0, 1000) : null,
-        order: order || 0,
+        order: isNaN(parsedOrder) ? 0 : parsedOrder,
       },
     });
     res.status(201).json(item);
@@ -70,6 +71,7 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
   if (embedUrl !== undefined && !isAllowedEmbedUrl(embedUrl)) {
     return res.status(400).json({ message: 'Bul siltewge ruxsat joq. Tek: ' + ALLOWED_HOSTS.join(', ') });
   }
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : undefined;
   try {
     const item = await prisma.interactive.update({
       where: { id: req.params.id },
@@ -78,7 +80,7 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
         title: title !== undefined ? String(title).slice(0, 200) : undefined,
         embedUrl: embedUrl !== undefined ? String(embedUrl).trim() : undefined,
         description: description !== undefined ? (description ? String(description).slice(0, 1000) : null) : undefined,
-        order,
+        order: parsedOrder !== undefined && !isNaN(parsedOrder) ? parsedOrder : undefined,
       },
     });
     res.json(item);

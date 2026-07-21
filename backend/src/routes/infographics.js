@@ -23,13 +23,14 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, title, imageUrl, order } = req.body;
   if (!topicId || !title || !imageUrl) return res.status(400).json({ message: 'Majburiy maydanlar toldırılmaǵan' });
   if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : 0;
   try {
     const item = await prisma.infographic.create({
       data: {
         topicId,
         title: String(title).slice(0, 200),
         imageUrl: String(imageUrl).slice(0, 1000),
-        order: order || 0,
+        order: isNaN(parsedOrder) ? 0 : parsedOrder,
       },
     });
     res.status(201).json(item);
@@ -42,13 +43,14 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, imageUrl, order } = req.body;
   if (imageUrl !== undefined && !isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : undefined;
   try {
     const item = await prisma.infographic.update({
       where: { id: req.params.id },
       data: {
         title: title !== undefined ? String(title).slice(0, 200) : undefined,
         imageUrl: imageUrl !== undefined ? String(imageUrl).slice(0, 1000) : undefined,
-        order,
+        order: parsedOrder !== undefined && !isNaN(parsedOrder) ? parsedOrder : undefined,
       },
     });
     res.json(item);

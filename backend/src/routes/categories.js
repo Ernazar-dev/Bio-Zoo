@@ -79,9 +79,12 @@ router.get('/:slug', async (req, res) => {
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { name, description, imageUrl, order, subjectId } = req.body;
   if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : 0;
   try {
     const slug = req.body.slug || (await uniqueSlug(name));
-    const category = await prisma.category.create({ data: { name, slug, description, imageUrl, order: order || 0, subjectId: subjectId || null } });
+    const category = await prisma.category.create({
+      data: { name, slug, description, imageUrl, order: isNaN(parsedOrder) ? 0 : parsedOrder, subjectId: subjectId || null },
+    });
     res.status(201).json(category);
   } catch (e) {
     console.error(e);
@@ -92,10 +95,18 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { name, slug, description, imageUrl, order, subjectId } = req.body;
   if (!isSafeUrl(imageUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : undefined;
   try {
     const category = await prisma.category.update({
       where: { id: req.params.id },
-      data: { name, slug, description, imageUrl, order, subjectId: subjectId === undefined ? undefined : (subjectId || null) },
+      data: {
+        name,
+        slug,
+        description,
+        imageUrl,
+        order: parsedOrder !== undefined && !isNaN(parsedOrder) ? parsedOrder : undefined,
+        subjectId: subjectId === undefined ? undefined : (subjectId || null),
+      },
     });
     res.json(category);
   } catch (e) {

@@ -14,9 +14,10 @@ router.get('/topic/:topicId', async (req, res) => {
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, title, url, description, platform, order } = req.body;
   if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : 0;
   try {
     const game = await prisma.gameLink.create({
-      data: { topicId, title, url, description, platform, order: order || 0 },
+      data: { topicId, title, url, description, platform, order: isNaN(parsedOrder) ? 0 : parsedOrder },
     });
     res.status(201).json(game);
   } catch (e) {
@@ -28,10 +29,11 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, url, description, platform, order } = req.body;
   if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : undefined;
   try {
     const game = await prisma.gameLink.update({
       where: { id: req.params.id },
-      data: { title, url, description, platform, order },
+      data: { title, url, description, platform, order: parsedOrder !== undefined && !isNaN(parsedOrder) ? parsedOrder : undefined },
     });
     res.json(game);
   } catch (e) {

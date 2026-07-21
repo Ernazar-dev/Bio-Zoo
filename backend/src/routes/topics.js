@@ -36,9 +36,17 @@ router.get('/:id', async (req, res) => {
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { categoryId, title, description, coverImage, has3DModel, order } = req.body;
   if (!isSafeUrl(coverImage)) return res.status(400).json({ message: 'URL tek ǵana http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : 0;
   try {
     const topic = await prisma.topic.create({
-      data: { categoryId, title, description, coverImage, has3DModel: has3DModel || false, order: order || 0 },
+      data: {
+        categoryId,
+        title,
+        description,
+        coverImage,
+        has3DModel: has3DModel === true || has3DModel === 'true',
+        order: isNaN(parsedOrder) ? 0 : parsedOrder,
+      },
     });
     res.status(201).json(topic);
   } catch (e) {
@@ -50,10 +58,18 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, description, coverImage, has3DModel, order, categoryId } = req.body;
   if (!isSafeUrl(coverImage)) return res.status(400).json({ message: 'URL tek ǵana http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : undefined;
   try {
     const topic = await prisma.topic.update({
       where: { id: req.params.id },
-      data: { title, description, coverImage, has3DModel, order, categoryId },
+      data: {
+        title,
+        description,
+        coverImage,
+        has3DModel: has3DModel !== undefined ? (has3DModel === true || has3DModel === 'true') : undefined,
+        order: parsedOrder !== undefined && !isNaN(parsedOrder) ? parsedOrder : undefined,
+        categoryId,
+      },
     });
     res.json(topic);
   } catch (e) {

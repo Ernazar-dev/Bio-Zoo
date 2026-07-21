@@ -14,9 +14,10 @@ router.get('/topic/:topicId', async (req, res) => {
 router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, type, title, content, url, order } = req.body;
   if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : 0;
   try {
     const material = await prisma.material.create({
-      data: { topicId, type, title, content, url, order: order || 0 },
+      data: { topicId, type, title, content, url, order: isNaN(parsedOrder) ? 0 : parsedOrder },
     });
     res.status(201).json(material);
   } catch (e) {
@@ -28,10 +29,11 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
 router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { title, content, url, order, type } = req.body;
   if (!isSafeUrl(url)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
+  const parsedOrder = order !== undefined && order !== null && order !== '' ? parseInt(order, 10) : undefined;
   try {
     const material = await prisma.material.update({
       where: { id: req.params.id },
-      data: { title, content, url, order, type },
+      data: { title, content, url, order: parsedOrder !== undefined && !isNaN(parsedOrder) ? parsedOrder : undefined, type },
     });
     res.json(material);
   } catch (e) {

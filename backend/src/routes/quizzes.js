@@ -44,9 +44,18 @@ router.post('/', authenticate, adminOnly, async (req, res) => {
   const { topicId, fileUrl, fileType, questionCount, timeLimit, answerKey } = req.body;
   if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Juwaplar gilti formatı qáte' });
+  const parsedQC = questionCount !== undefined && questionCount !== null && questionCount !== '' ? parseInt(questionCount, 10) : 0;
+  const parsedTL = timeLimit !== undefined && timeLimit !== null && timeLimit !== '' ? parseInt(timeLimit, 10) : 0;
   try {
     const quiz = await prisma.quiz.create({
-      data: { topicId, fileUrl, fileType, questionCount, timeLimit, answerKey },
+      data: {
+        topicId,
+        fileUrl,
+        fileType,
+        questionCount: isNaN(parsedQC) ? 0 : parsedQC,
+        timeLimit: isNaN(parsedTL) ? 0 : parsedTL,
+        answerKey,
+      },
     });
     res.status(201).json(quiz);
   } catch (e) {
@@ -82,10 +91,18 @@ router.put('/:id', authenticate, adminOnly, async (req, res) => {
   const { fileUrl, fileType, questionCount, timeLimit, answerKey } = req.body;
   if (!isSafeUrl(fileUrl)) return res.status(400).json({ message: 'URL tek http(s) bolıwı múmkin' });
   if (!isValidAnswerKey(answerKey)) return res.status(400).json({ message: 'Juwaplar gilti formatı qáte' });
+  const parsedQC = questionCount !== undefined && questionCount !== null && questionCount !== '' ? parseInt(questionCount, 10) : undefined;
+  const parsedTL = timeLimit !== undefined && timeLimit !== null && timeLimit !== '' ? parseInt(timeLimit, 10) : undefined;
   try {
     const quiz = await prisma.quiz.update({
       where: { id: req.params.id },
-      data: { fileUrl, fileType, questionCount, timeLimit, answerKey },
+      data: {
+        fileUrl,
+        fileType,
+        questionCount: parsedQC !== undefined && !isNaN(parsedQC) ? parsedQC : undefined,
+        timeLimit: parsedTL !== undefined && !isNaN(parsedTL) ? parsedTL : undefined,
+        answerKey,
+      },
     });
     res.json(quiz);
   } catch (e) {
