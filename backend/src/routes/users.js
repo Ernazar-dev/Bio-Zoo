@@ -146,4 +146,18 @@ router.get('/me/quiz-results/:topicId', authenticate, async (req, res) => {
   res.json(results);
 });
 
+// Admin: studentni o'chirish
+router.delete('/:id', authenticate, adminOnly, async (req, res) => {
+  try {
+    const user = await prisma.user.findUnique({ where: { id: req.params.id } });
+    if (!user) return res.status(404).json({ message: 'Student tabılmadı' });
+    if (user.role === 'ADMIN') return res.status(403).json({ message: 'Admin hesabın óshiriw múmkin emes' });
+    await prisma.user.delete({ where: { id: req.params.id } });
+    res.json({ message: 'Óshirildi' });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ message: 'Óshiriwde qátelik júz berdi' });
+  }
+});
+
 module.exports = router;

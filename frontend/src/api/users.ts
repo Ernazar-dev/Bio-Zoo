@@ -6,6 +6,7 @@ export const getStats = () =>
 export const getLeaderboard = () => api.get<User[]>('/users/leaderboard').then(r => r.data);
 export const getMe = () => api.get<User>('/users/me').then(r => r.data);
 export const getAllStudents = () => api.get<User[]>('/users').then(r => r.data);
+export const deleteStudent = (id: string) => api.delete<{ message: string }>(`/users/${id}`).then(r => r.data);
 export const getMyActivity = () => api.get('/users/me/activity').then(r => r.data);
 
 export interface MyProgress {

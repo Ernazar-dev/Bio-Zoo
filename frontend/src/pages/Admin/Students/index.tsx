@@ -1,8 +1,8 @@
 import React, { useMemo, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Table, Typography, Tag, Avatar, Input, Row, Col } from 'antd';
-import { SearchOutlined, TrophyOutlined, TeamOutlined, RiseOutlined, StarOutlined } from '@ant-design/icons';
-import { getAllStudents } from '../../../api/users';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { Table, Typography, Tag, Avatar, Input, Row, Col, Popconfirm, Button, message } from 'antd';
+import { SearchOutlined, TrophyOutlined, TeamOutlined, RiseOutlined, StarOutlined, DeleteOutlined } from '@ant-design/icons';
+import { getAllStudents, deleteStudent } from '../../../api/users';
 
 const { Title, Text } = Typography;
 
@@ -41,8 +41,21 @@ const StatCard: React.FC<{ icon: React.ReactNode; label: string; value: React.Re
 );
 
 const AdminStudents: React.FC = () => {
+  const queryClient = useQueryClient();
   const { data = [], isLoading } = useQuery({ queryKey: ['students'], queryFn: getAllStudents });
   const [search, setSearch] = useState('');
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteStudent(id),
+    onSuccess: () => {
+      message.success('Student óshirildi');
+      queryClient.invalidateQueries({ queryKey: ['students'] });
+      queryClient.invalidateQueries({ queryKey: ['leaderboard'] });
+    },
+    onError: () => {
+      message.error('Studentti óshiriwde qátelik júz berdi');
+    },
+  });
 
   const students = useMemo(
     () => data
@@ -107,6 +120,26 @@ const AdminStudents: React.FC = () => {
       title: "Dizimnen ótken", dataIndex: 'createdAt', key: 'createdAt', width: 170,
       render: (d: string) => new Date(d).toLocaleDateString('uz-UZ', { year: 'numeric', month: 'long', day: 'numeric' }),
       sorter: (a: any, b: any) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+    },
+    {
+      title: "Ámeller", key: 'actions', width: 90, align: 'center' as const,
+      render: (r: any) => (
+        <Popconfirm
+          title="Studentti óshiriw"
+          description="Haqıyqatanda usı studentti barlıq maǵlıwmatları bilan óshirpekshisiz be?"
+          okText="Awa"
+          cancelText="Yaq"
+          okButtonProps={{ danger: true }}
+          onConfirm={() => deleteMutation.mutate(r.id)}
+        >
+          <Button
+            type="text"
+            danger
+            icon={<DeleteOutlined />}
+            loading={deleteMutation.isPending && deleteMutation.variables === r.id}
+          />
+        </Popconfirm>
+      ),
     },
   ];
 
